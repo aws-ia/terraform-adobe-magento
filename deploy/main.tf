@@ -7,7 +7,7 @@ terraform {
 }
 
 # Use baseline VPC from aws-ia registery
-module "ecs_vpc" {
+module "magento_vpc" {
   source               = "aws-ia/vpc/aws"
   version              = "0.0.3"
   name                 = "magento-vpc"
