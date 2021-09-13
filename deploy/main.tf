@@ -19,3 +19,10 @@ module "ecs_vpc" {
   tags                 = {}
   create_vpc           = true
 }
+
+# Deploys example magento instance via root module
+module "magento" {
+  source     = "../"
+  # interface to be defined
+  # 
+}
