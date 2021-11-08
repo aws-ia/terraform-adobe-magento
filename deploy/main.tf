@@ -1,28 +1,49 @@
-# Example deployment using Terraform Cloud
-
-# Defaults to TFC for remote backend
 terraform {
+  required_version = ">= 1.0.1"
   backend "remote" {}
-  required_version = ">= 1.0.5"
 }
 
-# Use baseline VPC from aws-ia registery
-module "magento_vpc" {
-  source               = "aws-ia/vpc/aws"
-  version              = "0.0.3"
-  name                 = "magento-vpc"
-  region               = var.region
-  cidr                 = "10.0.0.0/16"
-  public_subnets       = ["10.0.0.0/20"]
-  private_subnets_A    = ["10.0.16.0/20", "10.0.32.0/20", "10.0.48.0/20"]
-  enable_dns_hostnames = true
-  tags                 = {}
-  create_vpc           = true
+provider "aws" {
+  region = var.region
 }
 
-# Deploys example magento instance via root module
+# Magento Quickstart
 module "magento" {
-  source     = "../"
-  # interface to be defined
-  # 
+  source = "../"
+  region = var.region
+  create_vpc = var.create_vpc
+  az1 = var.az1
+  az2 = var.az2
+  profile = var.profile
+  project = var.project
+  base_ami_os = var.base_ami_os
+  domain_name = var.domain_name
+  ssh_key_name = var.ssh_key_name
+  ssh_key_pair_name = var.ssh_key_pair_name
+  ssh_username = var.ssh_username
+  mage_composer_username = var.mage_composer_username
+  mage_composer_password = var.mage_composer_password
+  magento_admin_firstname = var.magento_admin_firstname
+  magento_admin_lastname = var.magento_admin_lastname
+  magento_admin_username = var.magento_admin_username
+  magento_admin_password = var.magento_admin_password
+  magento_admin_email = var.magento_admin_email
+  magento_database_password = var.magento_database_password
+  cert = var.cert
+  elasticsearch_domain = var.elasticsearch_domain
+  rabbitmq_username = var.rabbitmq_username
+  management_addresses = var.management_addresses
+
+  vpc_cidr = var.vpc_cidr
+  ###
+  # Existing VPC
+  # Only applied if variable create_vpc is set to false
+  ###
+  vpc_id = var.vpc_id
+  vpc_public_subnet_id = var.vpc_public_subnet_id
+  vpc_public2_subnet_id = var.vpc_public2_subnet_id
+  vpc_private_subnet_id = var.vpc_private_subnet_id
+  vpc_private2_subnet_id = var.vpc_private2_subnet_id
+  vpc_rds_subnet_id = var.vpc_rds_subnet_id
+  vpc_rds_subnet2_id = var.vpc_rds_subnet2_id
 }

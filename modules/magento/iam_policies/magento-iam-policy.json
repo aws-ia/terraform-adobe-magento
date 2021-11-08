@@ -1,0 +1,44 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {    
+      "Effect": "Allow",
+      "Action": [ "ec2:DescribeTags"],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:GetLogEvents","logs:PutLogEvents"],
+      "Resource": "arn:aws:logs:*:*:log-group:/*:log-stream:*"
+    },
+    {
+    "Effect": "Allow",
+    "Action": ["logs:CreateLogStream","logs:DescribeLogStreams","logs:PutRetentionPolicy"],
+    "Resource": "arn:aws:logs:*:*:log-group:/*"
+    },
+    {
+    "Effect": "Allow",
+    "Action": ["ssm:GetParameter"],
+    "Resource": ["arn:aws:ssm:*:*:parameter/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${bucket}",
+        "arn:aws:s3:::${bucket}/*"
+      ]
+    },
+    {
+      "Sid": "AllowRootAndHomeListingOfBucket",
+      "Action": ["s3:ListBucket"],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${bucket}"
+      ],
+      "Condition":{"StringLike":{"s3:prefix":["*"]}}
+    }
+  ]
+}
