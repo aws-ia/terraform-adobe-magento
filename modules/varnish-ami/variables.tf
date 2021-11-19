@@ -2,23 +2,23 @@
 # Common        #
 #################
 variable "base_ami_id" {
-    type = string
-    description = "Base AMI for EC2 instances."
+  type        = string
+  description = "Base AMI for EC2 instances."
 }
 
 variable "ssh_key_name" {
-    type = string
-    description = "Admin SSH key name stored in secrets manager."
+  type        = string
+  description = "Admin SSH key name stored in secrets manager."
 }
 
 variable "ssh_username" {
-    type = string
-    description = "Admin SSH username"
+  type        = string
+  description = "Admin SSH username"
 }
 
 variable "ssh_key_pair_name" {
-    type = string
-    description = "Generated key-pair name in the AWS console."
+  type        = string
+  description = "Generated key-pair name in the AWS console."
 }
 
 ###################################
@@ -26,7 +26,7 @@ variable "ssh_key_pair_name" {
 ###################################
 variable "sg_allow_all_out_id" {
   description = "Security group ID for allowing outbound connections"
-  type = string
+  type        = string
 }
 
 variable "public_subnet_id" {
@@ -39,5 +39,5 @@ variable "vpc_id" {
 
 variable "management_addresses" {
   description = "IP addresses for management traffic"
-  type = list(string)
+  type        = list(string)
 }

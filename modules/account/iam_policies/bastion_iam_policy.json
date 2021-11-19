@@ -2,6 +2,7 @@
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "AllowBastionPolicy",
             "Action": [
                 "ec2:AttachVolume",
                 "ec2:AuthorizeSecurityGroupIngress",

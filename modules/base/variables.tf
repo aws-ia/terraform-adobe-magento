@@ -3,47 +3,47 @@
 
 variable "project" {
   description = "Project identifier, used in e.g. S3 bucket naming"
-  type = string
+  type        = string
 }
 
 variable "create_vpc" {
   description = "To create a new VPC or not"
-  type = bool
+  type        = bool
 }
 
 variable "vpc_cidr" {
   description = "VPC CIDR"
-  type = string
+  type        = string
 }
 
 variable "az1" {
   description = "Availability zone 1, used to place subnets etc"
-  type = string
+  type        = string
 }
 
 variable "az2" {
   description = "Availability zone 2, used to place subnets etc"
-  type = string
+  type        = string
 }
 
 variable "management_addresses" {
   description = "IP addresses for management traffic"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "base_ami_id" {
-    type = string
-    description = "Base AMI for EC2 instances."
+  type        = string
+  description = "Base AMI for EC2 instances."
 }
 
 variable "ec2_instance_type_bastion" {
   description = "EC2 instance type for bastion host"
-  default = "t3.micro"
-  type = string
+  default     = "t3.micro"
+  type        = string
 }
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "Add domain that is used e.g. bastion host connections."
 }
 
@@ -62,41 +62,41 @@ variable "bastion_autoscale_desired" {
 #  Only applied if create_vpc is set to "true" #
 ################################################
 variable "vpc_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_public_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_public2_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_private_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_private2_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_rds_subnet_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "vpc_rds_subnet2_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "ssh_key_pair_name" {
-    type = string
-    description = "Generated key-pair name in the AWS console."
+  type        = string
+  description = "Generated key-pair name in the AWS console."
 }

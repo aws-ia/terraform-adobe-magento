@@ -3,18 +3,18 @@
 #####################
 
 variable "project" {
-  type = string
+  type        = string
   description = "Name of the project."
 }
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "Add domain name for the project."
-  default = null
+  default     = null
 }
 
 variable "cert" {
-  type = string
+  type    = string
   default = false
 }
 
@@ -60,18 +60,18 @@ variable "magento_admin_email" {
 ##############
 #  Base AMI  #
 ##############
-  locals {
+locals {
   os_ami_queries = {
     debian_10 = {
       most_recent = true
-      owners = ["136693071363"] # debian
+      owners      = ["136693071363"] # debian
       filters = {
         name = ["debian-11-amd64*"]
       }
     }
     amazon_linux_2 = {
       most_recent = true
-      owners = ["amazon"]
+      owners      = ["amazon"]
       filters = {
         name = ["amzn2-ami-hvm-*-x86_64*"]
       }
@@ -82,7 +82,7 @@ variable "magento_admin_email" {
 
 data "aws_ami" "selected" {
   most_recent = true
-  owners = local.ami_query.owners
+  owners      = local.ami_query.owners
 
   dynamic "filter" {
     for_each = local.ami_query.filters
@@ -95,10 +95,10 @@ data "aws_ami" "selected" {
 
 variable "base_ami_ids" {
   description = "Base AMI for bastion host and Magento EC2 instances. Amazon Linux 2 or Debian 10."
-  type = map(string)
+  type        = map(string)
   default = {
     "amazon_linux_2" = "ami-02e136e904f3da870",
-    "debian_10" = "ami-07d02ee1eeb0c996c"
+    "debian_10"      = "ami-07d02ee1eeb0c996c"
   }
 }
 
@@ -110,17 +110,17 @@ variable "base_ami_os" {
 # AZs #
 #######
 variable "region" {
-  type = string
+  type    = string
   default = "us-east-1"
 }
 
 variable "az1" {
-  type = string
+  type    = string
   default = "us-east-1a"
 }
 
 variable "az2" {
-  type = string
+  type    = string
   default = "us-east-1b"
 }
 
@@ -133,22 +133,22 @@ variable "create_vpc" {
 }
 
 variable "vpc_cidr" {
-  type = string
+  type        = string
   description = "VPC CIDR"
 }
 
 variable "management_addresses" {
   description = "Whitelisted IP addresses for e.g. Security Groups"
-  type    = list(string)
+  type        = list(string)
 }
 
 variable "mage_composer_username" {
-  type = string
+  type        = string
   description = "Magento auth.json username"
 }
 
 variable "mage_composer_password" {
-  type = string
+  type        = string
   description = "Magento auth.json password"
 }
 
@@ -157,9 +157,9 @@ variable "mage_composer_password" {
 ##################
 
 variable "lb_access_logs_enabled" {
-  type = bool
+  type        = bool
   description = "Enable load balancer accesslogs to s3 bucket"
-  default = false
+  default     = false
 }
 
 ##################
@@ -175,9 +175,9 @@ variable "magento_db_allocated_storage" {
 }
 
 variable "skip_rds_snapshot_on_destroy" {
-  type = bool
+  type        = bool
   description = "Take a final snapshot on RDS destroy?"
-  default = false
+  default     = false
 }
 
 variable "magento_db_performance_insights_enabled" {
@@ -189,7 +189,7 @@ variable "magento_db_performance_insights_enabled" {
 ##################
 
 variable "elasticsearch_domain" {
-  type = string
+  type        = string
   description = "ElasticSearch domain"
 }
 
@@ -198,7 +198,7 @@ variable "elasticsearch_domain" {
 ##################
 
 variable "rabbitmq_username" {
-  type = string
+  type        = string
   description = "Username for RabbitMQ"
 }
 

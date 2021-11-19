@@ -4,11 +4,16 @@ BASEDIR=/opt/ec2_install
 REGION=$(curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq .region -r)
 export REGION
 
+PRIVATEIPFILE="/home/magento/privateip"
+curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .privateIp > $PRIVATEIPFILE
+
 # Temporary file to store key - value data
 VARIABLE_TEMP_FILE="/tmp/discovered-vars"
 
 sudo chmod +x $BASEDIR/scripts/magento_vars.py
 /usr/bin/python3 $BASEDIR/scripts/magento_vars.py > ${VARIABLE_TEMP_FILE}
+
+sudo cp -a $VARIABLE_TEMP_FILE /opt/
 
 MAGENTO_DB_HOST=$(grep 'magento_database_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_DB_PASS=$(grep 'magento_database_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
@@ -29,6 +34,8 @@ MAGENTO_ADMIN_USERNAME=$(grep 'magento_admin_username:' ${VARIABLE_TEMP_FILE} | 
 MAGENTO_ADMIN_PASS=$(grep 'magento_admin_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_ADMIN_FIRSTNAME=$(grep 'magento_admin_firstname:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_ADMIN_LASTNAME=$(grep 'magento_admin_lastname:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
+
+MAGENTO_BUCKET=$(echo $MAGENTO_FILES_S3 | cut -d. -f1)
 
 sudo sed -i "s/AWS_BUCKET/$MAGENTO_FILES_S3/g" /etc/nginx/conf.d/magento.conf
 sudo systemctl restart nginx
@@ -118,6 +125,8 @@ then
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento setup:upgrade
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento deploy:mode:set production
 
+    sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento maintenance:enable
+
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento config:set web/secure/offloader_header X-Forwarded-Proto
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento config:set --scope=default --scope-code=0 system/full_page_cache/caching_application 2
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento config:set trans_email/ident_general/email ${MAGENTO_ADMIN_EMAIL}
@@ -127,12 +136,29 @@ then
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento setup:config:set --remote-storage-driver="aws-s3" \
         --remote-storage-bucket="${MAGENTO_FILES_S3}" \
         --remote-storage-region="${REGION}"
-    sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento remote-storage:sync &
+    sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento remote-storage:sync
 
+    sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento maintenance:disable
+    
+    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
+    sudo aws s3 cp /home/magento/.ssh/id_rsa.pub s3://${MAGENTO_BUCKET}/sync/master.pub
+    sudo aws s3 cp $PRIVATEIPFILE s3://${MAGENTO_BUCKET}/sync/
+
+    sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento cron:install
+
+    sudo cp /opt/ec2_install/scripts/sync.sh /home/magento/sync.sh
+    sudo chown magento. /home/magento/sync.sh
+    sudo -u magento crontab -l > /tmp/tmpcron
+    sudo -u magento echo "*/2 * * * * /bin/bash /home/magento/sync.sh" | sudo -u magento tee -a /tmp/tmpcron
+    sudo -u magento crontab /tmp/tmpcron
+else
+    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
+    sudo -u magento aws s3 cp s3://${MAGENTO_BUCKET}/sync/master.pub /home/magento/master.pub
+    sudo -u magento cat /home/magento/master.pub >> /home/magento/.ssh/authorized_keys
+    sudo chmod 600 /home/magento/.ssh/authorized_keys
+    sudo chown magento. /home/magento/.ssh/authorized_keys
 fi
 
 sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento cache:flush
-
-sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento cron:install
 
 echo flushall >/dev/tcp/${MAGENTO_REDIS_CACHE_HOST}/6379

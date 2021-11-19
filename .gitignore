@@ -43,3 +43,5 @@ lsp/
 
 # backend.hcl
 backend.hcl
+
+.DS_Store

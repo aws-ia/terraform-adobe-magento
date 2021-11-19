@@ -3,6 +3,6 @@ resource "aws_route53_zone" "project_zone" {
   name    = var.domain_name
   comment = "DNS Zone ${var.domain_name}"
   tags = {
-    Terraform = "true"
+    Terraform = true
   }
 }

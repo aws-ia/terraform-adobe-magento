@@ -15,3 +15,5 @@ if [ $? -eq 0 ]; then
   $BASEDIR/scripts/install_nginx_amzn.sh "$BASEDIR"
   $BASEDIR/scripts/install_varnish_amzn.sh "$BASEDIR"
 fi
+
+echo "$(date -d "+1 hour" +"%M %H * * *") sudo shutdown -h" | crontab -

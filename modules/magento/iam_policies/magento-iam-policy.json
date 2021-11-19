@@ -1,27 +1,35 @@
 {
   "Version": "2012-10-17",
   "Statement": [
-    {    
+    {
+      "Sid": "AllowMagentoDescribeTags",
       "Effect": "Allow",
-      "Action": [ "ec2:DescribeTags"],
+      "Action": [
+        "ec2:DescribeTags",
+        "ec2:DescribeInstances"
+    ],
       "Resource": ["*"]
     },
     {
+      "Sid": "AllowMagentoPutLogs",
       "Effect": "Allow",
       "Action": ["logs:GetLogEvents","logs:PutLogEvents"],
       "Resource": "arn:aws:logs:*:*:log-group:/*:log-stream:*"
     },
     {
+    "Sid": "AllowMagentoLogStreams",
     "Effect": "Allow",
     "Action": ["logs:CreateLogStream","logs:DescribeLogStreams","logs:PutRetentionPolicy"],
     "Resource": "arn:aws:logs:*:*:log-group:/*"
     },
     {
+    "Sid": "AllowMagentoSSM",
     "Effect": "Allow",
     "Action": ["ssm:GetParameter"],
     "Resource": ["arn:aws:ssm:*:*:parameter/*"]
     },
     {
+      "Sid": "AllowMagentoS3Bucket",
       "Effect": "Allow",
       "Action": [
         "s3:*"

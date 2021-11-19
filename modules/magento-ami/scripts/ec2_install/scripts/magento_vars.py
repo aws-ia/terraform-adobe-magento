@@ -127,3 +127,9 @@ try:
   print("magento_admin_username: {}".format(magento_admin_username['Parameter']['Value']))
 except:
   print("magento_admin_username: NotFound")
+
+try:
+  magento_autoscale_name = ssm.get_parameter(Name="magento_autoscale_name", WithDecryption=True)
+  print("magento_autoscale_name: {}".format(magento_autoscale_name['Parameter']['Value']))
+except:
+  print("magento_autoscale_name: NotFound")

@@ -1,6 +1,15 @@
+provider "aws" {
+  region  = var.region
+  profile = var.profile
+}
+
+terraform {
+  required_version = ">= 1.0.1"
+}
+
 # Magento Quickstart
 module "magento" {
-  source                    = "../"
+  source                    = "../../"
   region                    = var.region
   create_vpc                = var.create_vpc
   az1                       = var.az1

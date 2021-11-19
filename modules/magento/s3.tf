@@ -1,17 +1,17 @@
 resource "aws_s3_bucket" "magento_files" {
   bucket_prefix = "${var.project}-magento-files-"
-  acl    = "private"
+  acl           = "private"
 
   tags = {
-    Name = "Magento Files"
+    Name        = "Magento Files"
     Description = "S3 bucket for Magento"
-    Terraform = "true"
+    Terraform   = true
   }
 
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
+        sse_algorithm = "AES256"
       }
     }
   }
@@ -49,7 +49,7 @@ POLICY
 resource "aws_ssm_parameter" "magento_files_s3" {
   name  = "/magento_files_s3"
   type  = "String"
-  value = "${aws_s3_bucket.magento_files.id}"
+  value = aws_s3_bucket.magento_files.id
   tags = {
     Terraform = true
   }

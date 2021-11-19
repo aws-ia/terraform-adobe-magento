@@ -8,7 +8,6 @@ sudo yum -y update
 sudo yum -y install nginx
 sudo systemctl enable nginx
 
-#sudo rm /etc/nginx/conf.d/default.conf
 sudo mv $BASEDIR/configs/magento.conf /etc/nginx/conf.d/
 sudo chown root. /etc/nginx/conf.d/magento.conf
 sudo sed -i 's/\/var\/run\/php\/php7.4-fpm.sock/\/var\/run\/php7.4-fpm.sock/g' /etc/nginx/conf.d/magento.conf

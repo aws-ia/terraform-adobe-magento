@@ -11,7 +11,7 @@ variable "varnish_ami" {
 
 variable "project" {
   description = "Project identifier, used in e.g. S3 bucket naming"
-  type = string
+  type        = string
 }
 
 variable "cert_arn" {
@@ -19,18 +19,18 @@ variable "cert_arn" {
 }
 
 variable "ssh_key_name" {
-    type = string
-    description = "Admin SSH key name stored in secrets manager."
+  type        = string
+  description = "Admin SSH key name stored in secrets manager."
 }
 
 variable "ssh_username" {
-    type = string
-    description = "Admin SSH username."
+  type        = string
+  description = "Admin SSH username."
 }
 
 variable "ssh_key_pair_name" {
-    type = string
-    description = "Generated key-pair name in the AWS console."
+  type        = string
+  description = "Generated key-pair name in the AWS console."
 }
 
 ####################
@@ -73,17 +73,17 @@ variable "nat_gateway_ip2" {
 ####################
 variable "sg_bastion_ssh_in_id" {
   description = "Security group ID for SSH access from bastion host"
-  type = string
+  type        = string
 }
 
 variable "sg_bastion_http_in_id" {
   description = "Security group ID for HTTP access from bastion host"
-  type = string
+  type        = string
 }
 
 variable "sg_allow_all_out_id" {
   description = "Security group ID for allowing outbound connections"
-  type = string
+  type        = string
 }
 
 variable "external_lb_sg_ids" {
@@ -95,9 +95,9 @@ variable "external_lb_sg_ids" {
 # LB booleans      #
 ####################
 variable "lb_access_logs_enabled" {
-  type = bool
+  type        = bool
   description = "Enable load balancer accesslogs to s3 bucket"
-  default = false
+  default     = false
 }
 
 
@@ -106,7 +106,7 @@ variable "lb_access_logs_enabled" {
 ####################
 variable "acl_id" {
   description = "Optional ACL to use in front of Cloudfront distribution"
-  default = null
+  default     = null
 }
 
 ####################################################
@@ -126,7 +126,7 @@ variable "magento_autoscale_desired" {
 # Magento EC2 Instance Size #
 #############################
 variable "ec2_instance_type_magento" {
- default = "m6i.large"
+  default = "m6i.large"
 }
 
 ####################################################
@@ -146,5 +146,5 @@ variable "varnish_autoscale_desired" {
 # Varnish EC2 Instance Size #
 #############################
 variable "ec2_instance_type_varnish" {
- default = "m6i.large"
+  default = "m6i.large"
 }

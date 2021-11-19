@@ -6,16 +6,16 @@
 
 resource "aws_efs_file_system" "magento_data" {
   creation_token = "magento_data"
-  encrypted = true
+  encrypted      = true
 
   tags = {
-    Name = "efs-magento-data"
+    Name        = "efs-magento-data"
     Description = "EFS storage for Magento"
-    Terraform = "true"
+    Terraform   = true
   }
 
   lifecycle {
-    ignore_changes = [ creation_token ]
+    ignore_changes = [creation_token]
   }
 
 }
@@ -24,7 +24,7 @@ resource "aws_efs_file_system" "magento_data" {
 
 resource "aws_efs_mount_target" "efs_private_subnet_mount" {
   file_system_id  = aws_efs_file_system.magento_data.id
-  subnet_id       = var.private_subnet_id 
+  subnet_id       = var.private_subnet_id
   security_groups = [var.sg_efs_private_in_id]
 }
 

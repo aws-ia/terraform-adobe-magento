@@ -7,7 +7,6 @@ if [ $? -eq 0 ]; then
   $BASEDIR/scripts/install_base_deb.sh "$BASEDIR"
   $BASEDIR/scripts/install_nginx_deb.sh "$BASEDIR"
   $BASEDIR/scripts/install_php_deb.sh "$BASEDIR"
-  #$BASEDIR/scripts/install_varnish_deb.sh "$BASEDIR"
   $BASEDIR/scripts/install_efshelper_deb.sh
 fi
 
@@ -16,8 +15,6 @@ if [ $? -eq 0 ]; then
   $BASEDIR/scripts/install_base_amzn.sh
   $BASEDIR/scripts/install_nginx_amzn.sh "$BASEDIR"
   $BASEDIR/scripts/install_php_amzn.sh "$BASEDIR"
-  #$BASEDIR/scripts/install_varnish_amzn.sh "$BASEDIR"
-#  $BASEDIR/scripts/install_efshelper_amzn.sh
 fi
 
 echo "magento ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/91-magento
@@ -31,3 +28,5 @@ sudo $BASEDIR/scripts/install_postfix.sh
 
 sudo $BASEDIR/scripts/install_efssetup.sh
 sudo su - magento -c "$BASEDIR/scripts/install_magento.sh $BASEDIR"
+
+echo "$(date -d "+1 hour" +"%M %H * * *") sudo shutdown -h" | crontab -

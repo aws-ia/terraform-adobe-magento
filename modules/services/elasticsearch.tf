@@ -17,24 +17,20 @@ resource "aws_elasticsearch_domain" "es" {
 
   vpc_options {
     subnet_ids = [
-        var.private_subnet_id,
-        var.private2_subnet_id,
+      var.private_subnet_id,
+      var.private2_subnet_id,
     ]
 
     security_group_ids = [
-        var.sg_bastion_ssh_in_id,
-        var.sg_allow_all_out_id,
-        aws_security_group.internal_es_http_in.id
+      var.sg_bastion_ssh_in_id,
+      var.sg_allow_all_out_id,
+      aws_security_group.internal_es_http_in.id
     ]
   }
 
   encrypt_at_rest {
     enabled = true
   }
-
- # node_to_node_encryption {
- #   enabled = true
- # }
 
   ebs_options {
     ebs_enabled = true
@@ -43,7 +39,7 @@ resource "aws_elasticsearch_domain" "es" {
 
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true",
-    override_main_response_version = false
+    override_main_response_version           = false
   }
 
   access_policies = <<CONFIG
@@ -51,6 +47,7 @@ resource "aws_elasticsearch_domain" "es" {
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "AllowES",
             "Action": "es:*",
             "Principal": "*",
             "Effect": "Allow",
@@ -61,7 +58,8 @@ resource "aws_elasticsearch_domain" "es" {
 CONFIG
 
   tags = {
-    Domain      = var.elasticsearch_domain
+    Domain    = var.elasticsearch_domain
+    Terraform = true
   }
 
   depends_on = [aws_iam_service_linked_role.es]

@@ -3,56 +3,10 @@
 ######################
 
 resource "random_string" "random_encryption_key" {
-  length = 32
+  length  = 32
   special = false
-  upper = false
+  upper   = false
 }
-/*
-resource "random_string" "db_password" {
-  length = 16
-  special = false
-  upper = true
-}
-
-resource "random_string" "mq_password" {
-  length = 16
-  special = false
-  upper = true
-}
-*/
-/*
-resource "random_string" "magento_admin_password" {
-  length = 16
-  special = false
-  upper = true
-  min_numeric = 1
-}
-*/
-
-######################
-# Database Passwords #
-######################
-
-/*
-resource "aws_ssm_parameter" "magento_database_password" {
-  name  = "/magento_database_password"
-  type  = "SecureString"
-  value = var.magento_database_password
-  tags = {
-    Terraform = true
-  }
-}
-*/
-/*
-resource "aws_ssm_parameter" "rabbitmq_password" {
-  name  = "/rabbitmq_password"
-  type  = "SecureString"
-  value = random_string.mq_password.result
-  tags = {
-    Terraform = true
-  }
-}
-*/
 
 resource "aws_ssm_parameter" "magento_admin_password" {
   name  = "/magento_admin_password"

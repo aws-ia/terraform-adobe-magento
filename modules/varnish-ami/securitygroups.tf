@@ -1,7 +1,7 @@
 
-resource aws_security_group "varnish_ami_ssh_in" {
-  name          = "varnish_ami_ssh_in"
-  description   = "Allow incoming connections to the Varnish AMI creation host"
+resource "aws_security_group" "varnish_ami_ssh_in" {
+  name        = "varnish_ami_ssh_in"
+  description = "Allow incoming connections to the Varnish AMI creation host"
   ingress {
     from_port   = 22
     to_port     = 22
@@ -11,7 +11,7 @@ resource aws_security_group "varnish_ami_ssh_in" {
   vpc_id = var.vpc_id
 
   tags = {
-    Name = "varnish_ami_ssh_in"
+    Name      = "varnish_ami_ssh_in"
     Terraform = "true"
   }
 

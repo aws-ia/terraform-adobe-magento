@@ -5,19 +5,19 @@
 # Allow Bastion host to get EC2 credentials
 
 resource "aws_iam_role" "bastion_host_role" {
-    name = "BastionHostRole"
-    assume_role_policy = file("${path.module}/iam_policies/bastion_host_role.json")
+  name               = "BastionHostRole"
+  assume_role_policy = file("${path.module}/iam_policies/bastion_host_role.json")
 }
 
 resource "aws_iam_role_policy" "bastion_instance_role_policy" {
-    name = "BastionHostPolicy"
-    policy = templatefile("${path.module}/iam_policies/bastion_iam_policy.json", {"project" = var.project})
-    role = aws_iam_role.bastion_host_role.id
+  name   = "BastionHostPolicy"
+  policy = templatefile("${path.module}/iam_policies/bastion_iam_policy.json", { "project" = var.project })
+  role   = aws_iam_role.bastion_host_role.id
 }
 
 resource "aws_iam_instance_profile" "bastion_host_profile" {
-    name = "BastionHostProfile"
-    role = aws_iam_role.bastion_host_role.name
+  name = "BastionHostProfile"
+  role = aws_iam_role.bastion_host_role.name
 }
 
 # AWS Backup Related policies

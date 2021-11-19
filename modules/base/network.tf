@@ -3,14 +3,14 @@
 #########
 
 resource "aws_vpc" "main" {
-  count = local.vpc_count
-  cidr_block = var.vpc_cidr
+  count                = local.vpc_count
+  cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
 
   tags = {
-    Name = "main_vpc"
-    Description = "Main VPC" 
-    Terraform = "true"
+    Name        = "main_vpc"
+    Description = "Main VPC"
+    Terraform   = true
   }
 }
 
@@ -19,26 +19,38 @@ resource "aws_vpc" "main" {
 ############
 
 resource "aws_internet_gateway" "main" {
-  count = local.vpc_count
+  count  = local.vpc_count
   vpc_id = aws_vpc.main[count.index].id
 
   tags = {
-    Name = "internet_gw"
+    Name        = "internet_gw"
     Description = "Internet gateway for main VPC"
-    Terraform = "true"
+    Terraform   = true
   }
 }
 
 resource "aws_nat_gateway" "nat_gw" {
-  count = local.vpc_count
+  count         = local.vpc_count
   allocation_id = aws_eip.nat_gw[count.index].id
-  subnet_id = aws_subnet.public[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
+
+  tags = {
+    Name        = "nat_gw"
+    Description = "NAT gateway 1 for main VPC"
+    Terraform   = true
+  }
 }
 
 resource "aws_nat_gateway" "nat_gw2" {
-  count = local.vpc_count
+  count         = local.vpc_count
   allocation_id = aws_eip.nat_gw2[count.index].id
-  subnet_id = aws_subnet.public2[count.index].id
+  subnet_id     = aws_subnet.public2[count.index].id
+
+  tags = {
+    Name        = "nat_gw2"
+    Description = "NAT gateway 2 for main VPC"
+    Terraform   = true
+  }
 }
 
 ###############
@@ -46,27 +58,27 @@ resource "aws_nat_gateway" "nat_gw2" {
 ###############
 
 resource "aws_eip" "nat_gw" {
-  count = local.vpc_count
-  vpc = true
+  count      = local.vpc_count
+  vpc        = true
   depends_on = [aws_internet_gateway.main]
 
   tags = {
-    Name = "nat_gw"
-    Description = "Elastic IP for NAT gateway"
-    Terraform = "true"
+    Name        = "nat_gw_eip1"
+    Description = "Elastic IP 1 for NAT gateway"
+    Terraform   = true
   }
 }
 
 
 resource "aws_eip" "nat_gw2" {
-  count = local.vpc_count
-  vpc = true
+  count      = local.vpc_count
+  vpc        = true
   depends_on = [aws_internet_gateway.main]
 
   tags = {
-    Name = "nat_gw2"
-    Description = "Elastic IP for NAT gateway 2"
-    Terraform = "true"
+    Name        = "nat_gw_eip2"
+    Description = "Elastic IP 2 for NAT gateway 2"
+    Terraform   = true
   }
 }
 
@@ -75,56 +87,56 @@ resource "aws_eip" "nat_gw2" {
 #############
 
 resource "aws_subnet" "public" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 4, 8) 
-  availability_zone = var.az1
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 4, 8)
+  availability_zone       = var.az1
   map_public_ip_on_launch = false
   tags = {
-    Name = "public-subnet"
-    Description = "Public subnet for frontend services"
-    Terraform = "true"
+    Name        = "public-subnet"
+    Description = "Public subnet 1 for frontend services"
+    Terraform   = true
   }
 }
 
 resource "aws_subnet" "private" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 3, 0) 
-  availability_zone = var.az1
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 3, 0)
+  availability_zone       = var.az1
   map_public_ip_on_launch = false
   tags = {
-    Name = "private-subnet"
-    Description = "Private subnet for backend services"
-    Terraform = "true"
+    Name        = "private-subnet"
+    Description = "Private subnet 1 for backend services"
+    Terraform   = true
   }
 }
 
 # Second public subnet
 resource "aws_subnet" "public2" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 4, 9) 
-  availability_zone = var.az2
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 4, 9)
+  availability_zone       = var.az2
   map_public_ip_on_launch = false
   tags = {
-    Name = "public-subnet2"
-    Description = "Public subnet 2"
-    Terraform = "true"
+    Name        = "public-subnet2"
+    Description = "Public subnet 2 for frontend services"
+    Terraform   = true
   }
 }
 
 # Second private subnet
 resource "aws_subnet" "private2" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 3, 1) 
-  availability_zone = var.az2
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 3, 1)
+  availability_zone       = var.az2
   map_public_ip_on_launch = false
   tags = {
-    Name = "private-subnet2"
-    Description = "Private subnet 2"
-    Terraform = "true"
+    Name        = "private-subnet2"
+    Description = "Private subnet 2 for backend services"
+    Terraform   = true
   }
 }
 
@@ -134,29 +146,29 @@ resource "aws_subnet" "private2" {
 ####################
 # RDS Subnet az1
 resource "aws_subnet" "rds_subnet" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 4, 10)
-  availability_zone = var.az1
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 4, 10)
+  availability_zone       = var.az1
   map_public_ip_on_launch = false
   tags = {
-    Name = "rds-subnet"
-    Description = "RDS subnet"
-    Terraform = "true"
+    Name        = "rds-subnet"
+    Description = "RDS subnet 1"
+    Terraform   = true
   }
 }
 
 # RDS Subnet az2
 resource "aws_subnet" "rds_subnet2" {
-  count = local.vpc_count
-  vpc_id = aws_vpc.main[count.index].id
-  cidr_block = cidrsubnet(var.vpc_cidr, 4, 11)
-  availability_zone = var.az2
+  count                   = local.vpc_count
+  vpc_id                  = aws_vpc.main[count.index].id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 4, 11)
+  availability_zone       = var.az2
   map_public_ip_on_launch = false
   tags = {
-    Name = "rds-subnet2"
+    Name        = "rds-subnet2"
     Description = "RDS subnet 2"
-    Terraform = "true"
+    Terraform   = true
   }
 }
 
@@ -165,95 +177,95 @@ resource "aws_subnet" "rds_subnet2" {
 ####################
 
 resource "aws_route_table" "default_to_igw" {
-  count = local.vpc_count
+  count  = local.vpc_count
   vpc_id = aws_vpc.main[count.index].id
   route {
-      cidr_block = "0.0.0.0/0"
-      gateway_id = aws_internet_gateway.main[count.index].id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main[count.index].id
   }
   timeouts {
     create = "5m"
   }
   tags = {
-    Name = "default_to_igw"
+    Name        = "default_to_igw"
     Description = "Default route to internet gateway"
-    Terraform = "true"
+    Terraform   = true
   }
 }
 
 resource "aws_route_table" "default_to_natgw" {
-  count = local.vpc_count
+  count  = local.vpc_count
   vpc_id = aws_vpc.main[count.index].id
   route {
-      cidr_block = "0.0.0.0/0"
-      nat_gateway_id = aws_nat_gateway.nat_gw[count.index].id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw[count.index].id
   }
   timeouts {
     create = "5m"
   }
   tags = {
-    Name = "default_to_natgw"
+    Name        = "default_to_natgw"
     Description = "Default route to NAT gateway"
-    Terraform = "true"
+    Terraform   = true
   }
 }
 
 resource "aws_route_table" "default_to_natgw2" {
-  count = local.vpc_count
+  count  = local.vpc_count
   vpc_id = aws_vpc.main[count.index].id
   route {
-      cidr_block = "0.0.0.0/0"
-      nat_gateway_id = aws_nat_gateway.nat_gw2[count.index].id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw2[count.index].id
   }
   timeouts {
     create = "5m"
   }
   tags = {
-    Name = "default_to_natgw2"
+    Name        = "default_to_natgw2"
     Description = "Default route to NAT gateway 2"
-    Terraform = "true"
+    Terraform   = true
   }
 }
 
 
 # Route public to IGW
 resource "aws_route_table_association" "public" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.public[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.default_to_igw[count.index].id
 }
 
 # Route private to NAT GW
 resource "aws_route_table_association" "private" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.private[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.default_to_natgw[count.index].id
 }
 
 # Route public2 to IGW
 resource "aws_route_table_association" "public2" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.public2[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.public2[count.index].id
   route_table_id = aws_route_table.default_to_igw[count.index].id
 }
 
 # Route private2 to NAT GW
 resource "aws_route_table_association" "private2" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.private2[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.private2[count.index].id
   route_table_id = aws_route_table.default_to_natgw2[count.index].id
 }
 
 # Route RDS subnet to NAT GW #1
 resource "aws_route_table_association" "rds_subnet" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.rds_subnet[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.rds_subnet[count.index].id
   route_table_id = aws_route_table.default_to_natgw[count.index].id
 }
 
 # Route RDS subnet to NAT GW #2
 resource "aws_route_table_association" "rds_subnet2" {
-  count = local.vpc_count
-  subnet_id = aws_subnet.rds_subnet2[count.index].id
+  count          = local.vpc_count
+  subnet_id      = aws_subnet.rds_subnet2[count.index].id
   route_table_id = aws_route_table.default_to_natgw2[count.index].id
 }

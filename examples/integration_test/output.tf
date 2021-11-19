@@ -42,19 +42,3 @@ output "magento_files_s3" {
 output "alb_external_dns_name" {
   value = module.magento.alb_external_dns_name
 }
-
-output "user_instructions" {
-  value = <<README
-NOTE! It takes about ~15 minutes for Magento to bootstrap
-so please wait for a while before trying out the installation.
-
-Webshop will be available at: https://${module.magento.magento_frontend_url}/ once ready.
-
-Bastion host and Magento webserver IPs can be found from the AWS Console.
-
-You can connect to web node with the following:
-ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP
-
-Ensure you have SSH key forwarding enabled.
-README
-}

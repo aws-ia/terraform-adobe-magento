@@ -7,7 +7,7 @@ output "magento_admin_url" {
 }
 
 output "magento_admin_password" {
-  value = module.ssm.magento_admin_password
+  value     = module.ssm.magento_admin_password
   sensitive = true
 }
 
