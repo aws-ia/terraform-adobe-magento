@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "magento_files" {
   bucket_prefix = "${var.project}-magento-files-"
   acl           = "private"
+  force_destroy = true
 
   tags = {
     Name        = "Magento Files"
