@@ -44,4 +44,5 @@ lsp/
 # backend.hcl
 backend.hcl
 
-.DS_Store
+# Desktop Service Store
+**/.DS_Store
