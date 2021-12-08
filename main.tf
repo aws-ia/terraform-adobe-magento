@@ -2,11 +2,6 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
-provider "aws" {
-  region  = var.region
-  profile = var.profile
-}
-
 # Create the basis for base module
 module "account" {
   source      = "./modules/account"
