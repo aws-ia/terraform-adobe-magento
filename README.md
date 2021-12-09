@@ -115,7 +115,7 @@ The items that need be edited prior to deployment are
 
 > Do not store secret information in source control
 
-Once the './deploy/variables.tf' file had been updated and reviewed, run the following Terraform command  
+Once the `./deploy/variables.tf` file had been updated and reviewed, run the following Terraform command  
 `terraform apply` or `terraform apply  -var-file="$HOME/.aws/terraform.tfvars"`.  
 
 Terraform apply is run remotely in Terraform Cloud and will take 30-60 minutes to deploy. 
