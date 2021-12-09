@@ -2,11 +2,12 @@
 
 # Terraform Adobe Commerce Quick Start
 This module is designed to deploy Magento into your AWS account using Terraform Cloud.  
-Authors: 
+
+Authors:   
 James Cowie, Pat McManaman, Mikko Sivula - _Shero Commerce_  
 Kenny Rajan, Dan Taoka, Vikram Mehto - _Solutions Architects, Amazon Web Services_
-  
-  
+
+    
 # Install Terraform
 To deploy this module, do the following:
 
@@ -100,44 +101,34 @@ Change directory to deploy dir (previous command auto generates backend.hcl)
 
 `cd ../deploy`
 
-Run the setup script to generate variables
+Open, edit, and review all of the variables in the variables.tf file.  
+Update the `default=` value for your deployment.  
+The `description=` gives additional context on each variable
+The items that need be edited prior to deployment are
 
-`bash setup-vars.sh`
+* Project Specific -> `domain_name`  
+* Magento Information -> `mage_composer_username`
+* Magento Information -> `mage_composer_password`
+* Magento Information -> `magento_admin_password`
+* Magento Information -> `magento_admin_email`
+* Database -> `magento_database_password`
 
-The script will ask for the following inputs
+> Do not store secret information in source control
 
-* `AWS Profile` - Profile to used, usually stored in ~/.aws/credentials on local computer.  ex. "default"
-* `Project Name` - Name to use for project  ex. terraform-magento
-* `Domain` - Domain to use "magento.<domain name to create>.com
-* `Region` - [AWS region](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) to deploy (ie: us-east-1). This should match what was specifiied when setuping up the Terraform Cloud workspace.    
-* `AZ 1` - First [Availability Zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones) to use.  
-* `AZ 2` - Second [Availability Zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones) to use.  
-* `Create a new VPC` - Create new VPC or use an existing. Valid choices are `Y` or `N`. If you do not create a new VPC, you will be asked for `VPC CIDR, VPC ID, VPC Public Subnet ID, VPC Public2 Subnet ID, VPC Private Subnet ID, VPC Private2 Subnet ID, VPC RDS Subnet ID, VPC RDS Subnet2 ID`  
-* `Key pair name in AWS` - Key pair name used when creating a keypair.  
-* `Composer Username` - Magento public authentication key for composer.
-* `Composer Password` - Magento private authentication key for composer.
-* `Base AMI image` - Amazon Linux 2 or Debian 10, use `amazon_linux_2` or `debian_10`   
-* `Magento Admin Firstname` - Firstname for Magento admin account.  
-* `Magento Admin Lastname` - Lastname for Magento admin account.  
-* `Magento Admin Email` - Email address for Magento admin account. This will also be used for the from address in Magento and SES. You should receive an email to verify this address from SES.  
-* `Magento Admin Username` - Username for Magento admin account.  
-* `Magento Admin Password` - Password for Magento admin account. Must be seven or more characters long and include both letters and numbers.  yes
-* `Database Password` - Database password to use.  
-* `IP to whitelist` - IP to whitelist for SSH access to bastion host.  
-
-The script will create a `terraform.auto.tfvars` file in the deploy folder.  
-Review the file.  
-Once this is reviewed and looks good, run the following Terraform command  
+Once the './deploy/variables.tf' file had been updated and reviewed, run the following Terraform command  
 `terraform apply` or `terraform apply  -var-file="$HOME/.aws/terraform.tfvars"`.  
 
 Terraform apply is run remotely in Terraform Cloud and will take 30-60 minutes to deploy. 
+
+During the deployment you should receive an Amazon Web Services email to allow Amazon SES to send emails. Verification should be done prior to logging into the Magento system
+
 Once the Terraform deployment has completed, an output will show the relevant information for accessing Magento
-** Note - Please allow about 15-20 minutes for Magento to bootstrap after Terraform completes. Various Magento install and configuration commands will be run during this time and the site will go into maintance mode.  Once out of maintance mode, images will be synced to the S3 bucket, and you may see some missing images if using the site while this is in progress.  
+** Note - Please allow about 15-20 minutes for Magento to bootstrap after Terraform completes. Various Magento install and configuration commands will be run during this time and the site will go into maintenance mode.  Once out of maintenance mode, images will be synced to the S3 bucket, and you may see some missing images if using the site while this is in progress.  
 
 
 # Test Your Magento Deployment
 Once Terraform has completed, it will output the frontend and backend URLs.  
-Use the credentials specified duriung the setup script step to login to the admin.  
+Use the credentials specified in the variables.tf file to login to the admin URL.  
 You can connect to web node with the following -  
 `ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP`
 
@@ -147,5 +138,6 @@ Ensure you have SSH key forwarding enabled.
 When you no longer need the infrastructure, you can destroy it with  
 `terraform destroy` or `terraform destroy  -var-file="$HOME/.aws/terraform.tfvars"`.  
 
-Before running this command, you will need to copy the objects of the S3 bucket used for the Magento files if you want to retain the content.   
-On destroy, the database is backed up and left as an artifact.
+> Before running this command, you will need to copy the objects of the S3 bucket used for the Magento files if you want to retain the content.  
+
+On destroy, the database is backed up and left as an artifact. This can be manually deleleted if not needed.
