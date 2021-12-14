@@ -92,7 +92,12 @@ Run the following commands in order:
 
 ```
 terraform init
-terraform apply or terraform apply -var-file="$HOME/.aws/terraform.tfvars"
+```
+
+Alternatively, for the previous command, specify the file:
+
+```
+terraform apply -var-file="$HOME/.aws/terraform.tfvars"
 ```
 
 You are asked for the following:
@@ -102,7 +107,7 @@ You are asked for the following:
 
 Terraform Cloud creates the workspace, which contains the Terraform Cloud organization name.
 
-Navigate to the directory to deploy dir (the previous command generates `backend.hcl`).
+Navigate to the directory, and deploy Magento (the previous `terraform init` command generates `backend.hcl`):
 
 ```
 cd ../deploy
