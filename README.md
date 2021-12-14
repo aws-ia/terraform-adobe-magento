@@ -1,14 +1,14 @@
 > Note: This module is in beta testing and likely contains bugs. It is not recommended for production use at this time.
 
 # Terraform Adobe Commerce Quick Start
-James Cowie, Pat McManaman, and Mikko Sivula, Shero Commerce
-
-Kenny Rajan, Dan Taoka, and Vikram Mehto, Amazon Web Services
-
 This module uses Terraform Cloud to deploy Magento on AWS.
 
+**Authors**
+*James Cowie, Pat McManaman, and Mikko Sivula, Shero Commerce*
+*Kenny Rajan, Dan Taoka, and Vikram Mehto, Amazon Web Services*
+
 # Install Terraform
-To install Terraform, see [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli){:target="_blank"}.
+See [Install Terraform^](https://learn.hashicorp.com/tutorials/terraform/install-cli).
 
 # Sign up for Terraform Cloud
 Sign up and log in to [Terraform Cloud](https://app.terraform.io/signup/account). A free tier is available if you don't have an account.
