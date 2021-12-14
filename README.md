@@ -1,14 +1,16 @@
 > Note: This module is in beta testing and likely contains bugs. It is not recommended for production use at this time.
 
 # Terraform Adobe Commerce Quick Start
-This module uses Terraform Cloud to deploy Magento on AWS.
+This module uses Terraform Cloud to deploy Magento on the Amazon Web Services (AWS) Cloud.
 
 **Authors**
+
 *James Cowie, Pat McManaman, and Mikko Sivula, Shero Commerce*
+
 *Kenny Rajan, Dan Taoka, and Vikram Mehto, Amazon Web Services*
 
 # Install Terraform
-See [Install Terraform^](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+See [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli).
 
 # Sign up for Terraform Cloud
 Sign up and log in to [Terraform Cloud](https://app.terraform.io/signup/account). A free tier is available if you don't have an account.
@@ -17,11 +19,15 @@ Sign up and log in to [Terraform Cloud](https://app.terraform.io/signup/account)
 
 Generate a Terraform Cloud token:
 
-`terraform login` 
+```
+terraform login
+```
 
 Export the `TERRAFORM_CONFIG` variable:
 
-`export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"`
+```
+export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"
+```
 
 # Configure the `tfvars` file
 
@@ -37,7 +43,7 @@ AWS_SESSION_TOKEN = "*****************"
 ```
 > (Replace *** with AKEY and SKEY)
 
-Note: STS-based credentials are optional but recommended.
+Note: Security Token Service (AWS STS)–based credentials are optional but recommended.
 
 > WARNING: Follow best practices for managing secrets, and ensure that your credentials are not stored in a public repository.
 
