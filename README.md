@@ -31,7 +31,7 @@ export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"
 
 # Configure the `tfvars` file
 
-Example filepath:
+Example path:
 
 ```
 $HOME/.aws/terraform.tfvars
@@ -66,7 +66,7 @@ To create a key pair, see [Prepare an AWS Account](https://docs.aws.amazon.com/q
 6. Copy and paste the private-key contents that you previously created.
 7. Select the encryption key, and choose **Next**. 
 8. Set secret name to `ssh-key-admin`, and choose **Next**.
-9. Set **automatic rotation** to **Disabled**, and choose **Next**.
+9. Set **Automatic rotation** to **Disabled**, and choose **Next**.
 10. Review and store the key.
 
 # Create Magento deployment keys
@@ -100,7 +100,7 @@ You are asked for the following:
 * The organization under which Terraform Cloud runs. This can be found in the Terraform Cloud console.
 * Setup confirmation.
 
-Teraform Cloud creates the workspace, which contains the Terraform Cloud organization name and workspace.
+Terraform Cloud creates the workspace, which contains the Terraform Cloud organization name.
 
 Navigate to the directory to deploy dir (the previous command generates `backend.hcl`).
 
@@ -114,7 +114,7 @@ cd ../deploy
 
 The following items must be edited before deployment:
 
-* Project specific -> `domain_name`
+* Project-specific -> `domain_name`
 * Magento information -> `mage_composer_username`
 * Magento information -> `mage_composer_password`
 * Magento information -> `magento_admin_password`
@@ -136,11 +136,11 @@ During the deployment, you should receive an AWS email to allow Amazon SES to se
 
 After the Terraform deployment completes, an output shows the relevant information for accessing Magento.
 
-> Important: After Terraform completes, sllow about 15–20 minutes for Magento to bootstrap. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with the Amazon S3 bucket.
+> Important: After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
 
 
 # Test the Magento deployment
-After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to web node:
+After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to the web node:
 
 ```
 ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP
@@ -148,7 +148,7 @@ ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_I
 
 > Note: Ensure that you have SSH key forwarding enabled.
 
-# Remove infrastructure
+# Clean up the infrastructure
 
 > Note: If you want to retain the Magento files stored in your Amazon S3 bucket, copy and save the bucket's objects before completing this step.
 
