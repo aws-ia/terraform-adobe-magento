@@ -1,0 +1,20 @@
+#cloud-config
+
+# Create group for admins
+groups:
+  - admins
+
+users:
+  - default
+  - name: <username>
+    groups: admins
+    home: /home/<username>
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-authorized-keys:
+      - ""
+
+# Add default user to admins group 
+system_info:
+  default_user:
+    groups: [admins]
