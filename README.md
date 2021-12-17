@@ -1,7 +1,7 @@
 > Note: This module is in beta testing and likely contains bugs. It is not recommended for production use at this time.
 
-# Terraform Adobe Commerce Quick Start
-This module uses Terraform Cloud to deploy Magento on the Amazon Web Services (AWS) Cloud.
+# Terraform Magento Commerce
+This module uses Terraform Cloud to deploy Magento Commerce on the Amazon Web Services (AWS) Cloud.
 
 **Authors**
 
@@ -119,12 +119,12 @@ cd ../deploy
 
 The following items must be edited before deployment:
 
-* Project-specific -> `domain_name`
-* Magento information -> `mage_composer_username`
-* Magento information -> `mage_composer_password`
-* Magento information -> `magento_admin_password`
-* Magento information -> `magento_admin_email`
-* Database -> `magento_database_password`
+* Project-specific: `domain_name`
+* Magento information: `mage_composer_username`
+* Magento information: `mage_composer_password`
+* Magento information: `magento_admin_password`
+* Magento information: `magento_admin_email`
+* Database: `magento_database_password`
 
 > Important: Don't store secret information in a public repository.
 
@@ -144,7 +144,7 @@ After the Terraform deployment completes, an output shows the relevant informati
 > Important: After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
 
 
-# Test the Magento deployment
+# Test the deployment
 After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to the web node:
 
 ```
