@@ -1,0 +1,55 @@
+=== About Shero Commerce
+
+https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstart[Shero Commerce^] is an e-commerce agency based in NY with offices around the world. Their team of skilled specialists and certified Magento developers create highly integrated e-commerce stores designed for increased conversions, faster site speed, enhanced customer experience, better SEO, and long-term growth. View https://sherocommerce.com/our-work/center-for-creative-leadership/[this case study^] to see how Shero worked with global nonprofit leadership organization Center for Creative Leadership to improve their site functionality and user experience while streamlining internal operations, all on Adobe Commerce powered by Magento.  
+{blank} +
+{blank} +
+Adapting to the ever-changing world of e-commerce, Shero continues to expand their offerings with innovative opportunities like this Magento Quick Start. To learn more or to contact their team, visit https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstart[SheroCommerce.com^].
+
+=== Additional Resources
+
+*AWS services*
+
+* https://aws.amazon.com/getting-started/[Getting Started^]
+* https://aws.amazon.com/documentation/cloudformation/[AWS CloudFormation^]
+
+* Amazon EC2
+** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html[User guide for Linux instances^]
+** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html[Regions and Availability Zones^]
+** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html[Key pairs^]
+** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-storage-concepts[Instance stores^]
+** https://aws.amazon.com/ec2/faqs[FAQ^]
+
+* Amazon Identity and Access Management
+** https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html[User guide^]
+** https://docs.aws.amazon.com/IAM/latest/UserGuide/role-usecase-ec2app.html[Benefits of the IAM role^]
+
+* https://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/WhatIsAutoScaling.html[Auto Scaling^]
+* https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/elastic-load-balancing.html[Load Balancing^]
+
+* Amazon EFS
+** https://aws.amazon.com/efs/getting-started/[Getting started guide^]
+** https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html[User guide^]
+
+* Amazon ElastiCache
+** https://aws.amazon.com/elasticache/getting-started/[Getting started guide^]
+** https://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/WhatIs.html[User guide^]
+
+* Amazon RDS
+** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html[User guide^]
+** https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html[MySQL on Amazon RDS^]
+** https://aws.amazon.com/rds/aurora/resources/[Amazon Aurora Resources^]
+
+* Amazon VPC
+** https://aws.amazon.com/documentation/vpc/[Documentation^]
+** https://aws.amazon.com/articles/2781451301784570[High availability for NAT instances^]
+** https://docs.aws.amazon.com/quickstart/latest/linux-bastion/[Linux Bastion Hosts on the AWS Cloud^]
+
+* https://aws.amazon.com/security/[AWS Security Center^]
+
+*Magento*
+
+* https://magento.com/tech-resources/download[Magento Open Source (formerly Community Edition) software^]
+* http://devdocs.magento.com/guides/v2.0/install-gde/bk-install-guide.html[Magento Installation Guide^]
+* http://devdocs.magento.com/guides/v2.0/install-gde/install/post-install-config.html[Magento Configuration Guide^]
+* http://docs.magento.com/m2/ce/user_guide/getting-started.html[Magento User Guide^]
+
