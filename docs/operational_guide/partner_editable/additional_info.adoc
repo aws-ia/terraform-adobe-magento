@@ -1,4 +1,5 @@
 === About Shero Commerce
+image::shero.png[]
 
 https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstart[Shero Commerce^] is an e-commerce agency based in NY with offices around the world. Their team of skilled specialists and certified Magento developers create highly integrated e-commerce stores designed for increased conversions, faster site speed, enhanced customer experience, better SEO, and long-term growth. View https://sherocommerce.com/our-work/center-for-creative-leadership/[this case study^] to see how Shero worked with global nonprofit leadership organization Center for Creative Leadership to improve their site functionality and user experience while streamlining internal operations, all on Adobe Commerce powered by Magento.  
 {blank} +
@@ -10,7 +11,6 @@ Adapting to the ever-changing world of e-commerce, Shero continues to expand the
 *AWS services*
 
 * https://aws.amazon.com/getting-started/[Getting Started^]
-* https://aws.amazon.com/documentation/cloudformation/[AWS CloudFormation^]
 
 * Amazon EC2
 ** https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html[User guide for Linux instances^]
@@ -25,10 +25,6 @@ Adapting to the ever-changing world of e-commerce, Shero continues to expand the
 
 * https://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/WhatIsAutoScaling.html[Auto Scaling^]
 * https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/elastic-load-balancing.html[Load Balancing^]
-
-* Amazon EFS
-** https://aws.amazon.com/efs/getting-started/[Getting started guide^]
-** https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html[User guide^]
 
 * Amazon ElastiCache
 ** https://aws.amazon.com/elasticache/getting-started/[Getting started guide^]
@@ -45,6 +41,11 @@ Adapting to the ever-changing world of e-commerce, Shero continues to expand the
 ** https://docs.aws.amazon.com/quickstart/latest/linux-bastion/[Linux Bastion Hosts on the AWS Cloud^]
 
 * https://aws.amazon.com/security/[AWS Security Center^]
+
+*Terraform*
+
+* https://www.terraform.io/[Overview^]
+* https://www.terraform.io/intro[Intro to Terraform^]
 
 *Magento*
 

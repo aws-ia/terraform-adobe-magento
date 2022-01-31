@@ -127,8 +127,6 @@ it creates and configures the necessary AWS components in the AWS Cloud.
 Deploying this Quick Start with default parameters for end-to-end deployment
 (which creates a new VPC) builds the following Magento environment in the AWS Cloud.
 
-image::architecture_diagram.png[]
-
 *Figure 1: Quick Start architecture for Magento*
 
 === AWS Components
@@ -156,18 +154,20 @@ only necessary protocols and ports. For example, access to HTTP server ports on 
 EC2 web servers is limited to Elastic Load Balancing. The security groups also restrict
 access to Amazon RDS DB instances by web server instances.
 
+image::architecture_diagram.png[]
+
 Architecture Flow of AWS Components
 
-. Amazon CloudFront is deployed as a content delivery network (CDN). CloudFront speeds up distribution of static and dynamic web content.
-. First Elastic Load Balancing (Application Load Balancer) distributes traffic across Varnish instances in an AWS Auto Scaling group in multiple Availability Zones.
-. Varnish deployed on Amazon Ec2, Varnish Cache is a web application accelerator caching HTTP reverse proxy. Balancer distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
-. Second Elastic Load Balancing (Application Load Balancer) distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
-. Magento web server on Amazon Ec2 instances launched in the private subnets.
-. Amazon Elasticsearch Service for Magento catalog search.
-. An Amazon ElastiCache cluster with the Redis cache engine launched in the private subnets.
-. Either an Amazon RDS for MySQL or an Amazon Aurora database engine deployed via Amazon RDS in the first private subnet. If you choose Multi-AZ deployment, a synchronously replicated secondary database is deployed in the second private subnet. This provides high availability and built-in automated failover from the primary database.
-. Amazon S3 created as remote storage for web server instances to store shared media files.
-. Amazon MQ (optional) is a message broker that offers a reliable, highly available, scalable, and portable messaging system. The Message Queue Framework (MQF) is a system that allows a https://glossary.magento.com/module[module^] to publish messages to queues for https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[Magento flow^]. It also defines the consumers that will receive the messages asynchronously. Bulk operations are actions that are performed on a large scale. Example bulk operations tasks include importing or exporting items, changing prices on a mass scale, and assigning products to a warehouse. For each individual task of a bulk operation, the system creates a message that is published in a https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[message queue^] and processed by background consumer runs. For more insights in bulk-operations, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/message-queues/bulk-operations.html[Adobe Devdocs documentation^].
+* Amazon CloudFront is deployed as a content delivery network (CDN). CloudFront speeds up distribution of static and dynamic web content.
+* First Elastic Load Balancing (Application Load Balancer) distributes traffic across Varnish instances in an AWS Auto Scaling group in multiple Availability Zones.
+* Varnish deployed on Amazon Ec2, Varnish Cache is a web application accelerator caching HTTP reverse proxy. Balancer distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
+* Second Elastic Load Balancing (Application Load Balancer) distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
+* Magento web server on Amazon Ec2 instances launched in the private subnets.
+* Amazon Elasticsearch Service for Magento catalog search.
+* An Amazon ElastiCache cluster with the Redis cache engine launched in the private subnets.
+* Either an Amazon RDS for MySQL or an Amazon Aurora database engine deployed via Amazon RDS in the first private subnet. If you choose Multi-AZ deployment, a synchronously replicated secondary database is deployed in the second private subnet. This provides high availability and built-in automated failover from the primary database.
+* Amazon S3 created as remote storage for web server instances to store shared media files.
+* Amazon MQ (optional) is a message broker that offers a reliable, highly available, scalable, and portable messaging system. The Message Queue Framework (MQF) is a system that allows a https://glossary.magento.com/module[module^] to publish messages to queues for https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[Magento flow^]. It also defines the consumers that will receive the messages asynchronously. Bulk operations are actions that are performed on a large scale. Example bulk operations tasks include importing or exporting items, changing prices on a mass scale, and assigning products to a warehouse. For each individual task of a bulk operation, the system creates a message that is published in a https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[message queue^] and processed by background consumer runs. For more insights in bulk-operations, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/message-queues/bulk-operations.html[Adobe Devdocs documentation^].
 
 === Magento Components
 
@@ -183,10 +183,10 @@ software:
 * Page Cache: Varnish 6.5
 * Content Catalog Search: Amazon ElasticSearch 7.10
 
-This Quick Start also optionally deploys Magento sample data, which lets you experiment
-with custom themes and view the web store. If you choose to install Magento software with
-sample data, the Quick Start mounts an Amazon EFS file system as a drive within the web
-server nodes and installs common media assets in the Amazon EFS file system. +
+This Quick Start deploys Magento sample data, which lets you experiment with custom
+themes and view the web store. The Quick Start mounts an Amazon EFS file system as
+a drive within the webserver nodes and installs common media assets in the Amazon 
+EFS file system. +
 {blank} +
 For more information about these utilities, see how to 
 http://devdocs.magento.com/guides/v2.0/install-gde/prereq/zip_install.html[install the Magento archive on your server^]
