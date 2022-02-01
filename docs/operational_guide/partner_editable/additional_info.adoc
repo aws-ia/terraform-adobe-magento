@@ -1,4 +1,4 @@
-=== About Shero Commerce
+==== About Shero Commerce
 image::shero.png[]
 
 https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstart[Shero Commerce^] is an e-commerce agency based in NY with offices around the world. Their team of skilled specialists and certified Magento developers create highly integrated e-commerce stores designed for increased conversions, faster site speed, enhanced customer experience, better SEO, and long-term growth. View https://sherocommerce.com/our-work/center-for-creative-leadership/[this case study^] to see how Shero worked with global nonprofit leadership organization Center for Creative Leadership to improve their site functionality and user experience while streamlining internal operations, all on Adobe Commerce powered by Magento.  
@@ -6,7 +6,7 @@ https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstar
 {blank} +
 Adapting to the ever-changing world of e-commerce, Shero continues to expand their offerings with innovative opportunities like this Magento Quick Start. To learn more or to contact their team, visit https://sherocommerce.com/?utm_source=apn&utm_medium=blog&utm_campaign=quickstart[SheroCommerce.com^].
 
-=== Additional Resources
+==== Additional Resources
 
 *AWS services*
 
