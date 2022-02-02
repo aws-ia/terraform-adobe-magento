@@ -303,7 +303,7 @@ services operate. In turn, you assume responsibility and management of the guest
 operating system (including updates and security patches), other associated applications,
 as well as the configuration of the AWS-provided security group firewall. For more
 information about security on AWS, visit the 
-http://aws.amazon.com/security/[AWS Security Center^].
+http://aws.amazon.com/security/[AWS Cloud Security^].
 
 === AWS Identity and Access Management (IAM)
 
