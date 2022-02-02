@@ -7,5 +7,5 @@
 :doc-year: 2022
 :partner-contributors: James Cowie, Pat McManaman, and Mikko Sivula, {partner-company-name}
 :other-contributors: Kenny Rajan and Vikram Mehto, AWS Solutions Architect
-:aws-contributors: Dan Taoka, AWS Integration and Automation team
-// :private_repo:1111
+:aws-ia-contributors: Dan Taoka, AWS Integration and Automation team
+// :private_repo:
