@@ -8,7 +8,7 @@ who are planning to implement or extend their Adobe Commerce powered Magento by 
 editions workloads on the AWS Cloud using the
 https://github.com/aws-ia/terraform-adobe-magento[Magento terraform Quick Start on Amazon Web Services (AWS)^].
 
-== Magento on AWS
+=== Magento on AWS
 
 https://magento.com/products/magento-open-source[Magento is an open-source content management system for^]
 e-commerce websites. AWS enables you to set up the infrastructure to support Adobe Commerce
@@ -25,7 +25,7 @@ general guidance and best practices for using Magento, see the
 http://docs.magento.com/m2/ce/user_guide/getting-started.html[Magento User Guide^] on the 
 Adobe Commerce website.
 
-=== Cost and Licenses
+==== Cost and Licenses
 
 This deployment launches Magento Open Source automatically into a configuration of your choice.
 You are responsible for the cost of the AWS services used while running this Quick Start
@@ -36,7 +36,7 @@ See the pricing pages for each AWS service you will be using for full details. +
 This Quick Start uses Magento Open Source (formerly Community Edition), which is open-source
 software distributed under the Open Software License (OSL 3.0).
 
-=== AWS Services
+==== AWS Services
 
 The core AWS components used by this Quick Start include the following AWS services. (If you
 are new to AWS, see the https://aws.amazon.com/getting-started/[Getting Started section^]
@@ -114,7 +114,7 @@ AWS services and resources for your users. With IAM, you can manage users, secur
 credentials such as access keys, and permissions that control which AWS resources users
 can access, from a central location.
 
-=== Architecture
+==== Architecture
 This Quick Start provides two deployment options. Depending upon which option you choose,
 it creates and configures the necessary AWS components in the AWS Cloud.
 
@@ -122,7 +122,7 @@ Deploying this Quick Start with default parameters for end-to-end deployment
 (which creates a new VPC) builds the following Magento environment in the AWS Cloud.
 
 
-=== AWS Components
+==== AWS Components
 
 Running this Quick Start with default parameters for a new VPC deploys and configures
 a VPC that spans two Availability Zones. Each Availability Zone is configured with a
@@ -164,7 +164,7 @@ Architecture Flow of AWS Components
 * Amazon S3 created as remote storage for web server instances to store shared media files.
 * Amazon MQ (optional) is a message broker that offers a reliable, highly available, scalable, and portable messaging system. The Message Queue Framework (MQF) is a system that allows a https://glossary.magento.com/module[module^] to publish messages to queues for https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[Magento flow^]. It also defines the consumers that will receive the messages asynchronously. Bulk operations are actions that are performed on a large scale. Example bulk operations tasks include importing or exporting items, changing prices on a mass scale, and assigning products to a warehouse. For each individual task of a bulk operation, the system creates a message that is published in a https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[message queue^] and processed by background consumer runs. For more insights in bulk-operations, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/message-queues/bulk-operations.html[Adobe Devdocs documentation^].
 
-=== Magento Components
+==== Magento Components
 
 This Quick Start deploys Magento Open Source (2.4.3) with the following prerequisite
 software:
@@ -187,7 +187,7 @@ For more information about these utilities, see how to
 http://devdocs.magento.com/guides/v2.0/install-gde/prereq/zip_install.html[install the Magento archive on your server^]
 on the Adobe Commerce website.
 
-=== Design Considerations
+==== Design Considerations
 
 Adobe Commerce powered by Magento is a robust e-commerce platform that can be deployed
 with a variety of options, depending on your needs. This Quick Start provides a great
@@ -195,7 +195,7 @@ starting point for building your e-commerce solution rapidly with Magento on the
 Cloud. The following sections discuss design considerations for large-scale deployments
 and options for optimizing performance.
 
-=== Amazon Aurora and Amazon RDS for MySQL
+==== Amazon Aurora and Amazon RDS for MySQL
 
 By default, this Quick Start uses Amazon Aurora, but you can deploy Amazon RDS for
 MySQL instead by setting a template parameter during deployment. If you choose Amazon
@@ -233,7 +233,7 @@ to a synchronously replicated secondary database that is running in a different 
 Zone. This option also enables you to scale out beyond the capacity of a single database for
 read-heavy database workloads.
 
-=== Amazon EC2 Web Server Instances
+==== Amazon EC2 Web Server Instances
 
 The deployment installs NGINX on EC2 instances running Amazon Linux x86-64. Elastic Load
 Balancing is used to automatically distribute the website load across these instances.
@@ -254,7 +254,7 @@ benchmark the cluster to make sure you achieve the level of performance you need
 starting a production deployment. For high availability, we recommend using at least
 two web server instances in different Availability Zones.
 
-=== Amazon Simple Storage Service (Amazon S3)
+==== Amazon Simple Storage Service (Amazon S3)
 
 When you deploy Magento with this Quick Start, Amazon S3 is configured as a Remote Storage
 module. This provides the option to store media files and schedule imports/exports in a
@@ -265,7 +265,7 @@ and configure storage quickly and easily. Multiple EC2 instances can access an A
 storage at the same time using the Magento remote storage option, providing a common data
 source for workloads and applications running on more than one instance.
 
-=== Amazon ElastiCache
+==== Amazon ElastiCache
 
 Amazon ElastiCache is a web service that helps you deploy and operate an in-memory cache
 in the AWS Cloud. This Quick Start automatically deploys an ElastiCache cluster using
@@ -274,7 +274,7 @@ deploying a distributed caching environment, and provides a way to improve appli
 load times. For more information, see the 
 http://aws.amazon.com/documentation/elasticache/[Amazon ElastiCache documentation^].
 
-=== Elasticsearch
+==== Elasticsearch
 
 Elasticsearch is a distributed search and analytics engine built on Apache Lucene. Since
 its release in 2010, Elasticsearch has quickly become the most popular search engine and
@@ -282,7 +282,7 @@ is commonly used for log analytics, full-text search, security intelligence, bus
 analytics, and operational intelligence use cases.As of version 2.4.3, Magento supports
 using Elasticsearch (ES) provided by Amazon Web Services (AWS).
 
-== Troubleshooting
+=== Troubleshooting
 
 *Q.* I encountered a Terraform error when deploying.
 
@@ -290,7 +290,7 @@ using Elasticsearch (ES) provided by Amazon Web Services (AWS).
 best to do a terraform destroy and then do terraform apply when encountering these 
 errors.
 
-== Security
+=== Security
 
 The AWS Cloud provides a scalable, highly reliable platform that helps customers 
 deploy applications and data quickly and securely. +
@@ -305,13 +305,13 @@ as well as the configuration of the AWS-provided security group firewall. For mo
 information about security on AWS, visit the 
 http://aws.amazon.com/security/[AWS Cloud Security^].
 
-=== AWS Identity and Access Management (IAM)
+==== AWS Identity and Access Management (IAM)
 
 This solution leverages an IAM role with least privileged access. It is not necessary
 or recommended to store SSH keys, secret keys, or access keys on the provisioned
 instances.
 
-=== OS Security
+==== OS Security
 
 The root user on cluster nodes can be accessed only by using the SSH key specified
 during the deployment process. AWS doesn't store these SSH keys, so if you lose your
@@ -320,7 +320,7 @@ SSH key you can lose access to these instances. +
 Operating system patches are your responsibility and should be performed on a periodic
 basis.
 
-=== Security Groups
+==== Security Groups
 
 A security group acts as a firewall that controls the traffic for one or more
 instances. When you launch an instance, you associate one or more security groups
