@@ -1,41 +1,3 @@
-This operational guide discusses best practices for deploying Magento on AWS using services
-such as Amazon Elastic Compute Cloud (Amazon EC2), Amazon Virtual Private Cloud
-(Amazon VPC), Amazon Relational Database Service (Amazon RDS), Amazon ElastiCache,
-Amazon Elasticsearch, Amazon MQ and Amazon Simple Storage Service (Amazon S3). +
-{blank} +
-The guide is for IT infrastructure architects, administrators, and DevOps professionals
-who are planning to implement or extend their Adobe Commerce powered Magento by community
-editions workloads on the AWS Cloud using the
-https://github.com/aws-ia/terraform-adobe-magento[Magento terraform Quick Start on Amazon Web Services (AWS)^].
-
-== Magento on AWS
-
-https://magento.com/products/magento-open-source[Magento is an open-source content management system for^]
-e-commerce websites. AWS enables you to set up the infrastructure to support Adobe Commerce
-deployment in a flexible, scalable, and cost-effective manner in the AWS Cloud. This
-reference deployment will help you rapidly build a Magento Open Source cluster by automating
-configuration and deployment tasks. +
-{blank} +
-The automated deployment builds a cluster that runs Magento version 2.4.3 or higher along
-with optional sample data. +
-{blank} +
-This guide covers the deployment of https://magento.com/products/magento-open-source[Magento^]
-Open Source in the AWS Cloud. It does not provide Magento product usage information. For
-general guidance and best practices for using Magento, see the
-http://docs.magento.com/m2/ce/user_guide/getting-started.html[Magento User Guide^] on the 
-Adobe Commerce website.
-
-=== Cost and Licenses
-
-This deployment launches Magento Open Source automatically into a configuration of your choice.
-You are responsible for the cost of the AWS services used while running this Quick Start
-reference deployment. There is no additional cost for using the Quick Start. The cost will
-vary depending on the storage and compute configuration of the cluster you deploy.
-See the pricing pages for each AWS service you will be using for full details. +
-{blank} +
-This Quick Start uses Magento Open Source (formerly Community Edition), which is open-source
-software distributed under the Open Software License (OSL 3.0).
-
 === AWS Services
 
 The core AWS components used by this Quick Start include the following AWS services. (If you
@@ -113,87 +75,6 @@ AWS Identity and Access Management (IAM) enables you to securely control access 
 AWS services and resources for your users. With IAM, you can manage users, security
 credentials such as access keys, and permissions that control which AWS resources users
 can access, from a central location.
-
-=== Architecture
-This Quick Start provides two deployment options. Depending upon which option you choose,
-it creates and configures the necessary AWS components in the AWS Cloud.
-
-Deploying this Quick Start with default parameters for end-to-end deployment
-(which creates a new VPC) builds the following Magento environment in the AWS Cloud.
-
-
-=== AWS Components
-
-Running this Quick Start with default parameters for a new VPC deploys and configures
-a VPC that spans two Availability Zones. Each Availability Zone is configured with a
-private and a public subnet. This Quick Start deploys the following AWS components in
-the AWS Cloud:
-
-* In a public subnet, a bastion host provides Secure Shell (SSH) access to the Magento
-web servers. The bastion host is maintained by an Auto Scaling group that spans multiple
-Availability Zones, and is configured to ensure there is always one bastion host available.
-* AWS-managed network address translation (NAT) gateways deployed into the public subnets
-and configured with an Elastic IP address for outbound internet connectivity. NAT
-gateways are used for internet access for all EC2 instances launched within the private
-network.
-* Auto Scaling is enabled to automatically increase capacity if there is a demand spike,
-and to reduce capacity during low traffic times. The default installation sets up low
-and high CPU-based thresholds for scaling the instance capacity up or down. You can
-modify these thresholds during launch and after deployment.
-* An IAM instance role with fine-grained permissions for access to AWS services
-necessary for the deployment process.
-* Appropriate security groups for each instance or function to restrict access to
-only necessary protocols and ports. For example, access to HTTP server ports on Amazon
-EC2 web servers is limited to Elastic Load Balancing. The security groups also restrict
-access to Amazon RDS DB instances by web server instances.
-
-image::architecture_diagram.png[]
-
-*Figure 1: Quick Start architecture for Magento*
-
-Architecture Flow of AWS Components
-
-* Amazon CloudFront is deployed as a content delivery network (CDN). CloudFront speeds up distribution of static and dynamic web content.
-* First Elastic Load Balancing (Application Load Balancer) distributes traffic across Varnish instances in an AWS Auto Scaling group in multiple Availability Zones.
-* Varnish deployed on Amazon Ec2, Varnish Cache is a web application accelerator caching HTTP reverse proxy. Balancer distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
-* Second Elastic Load Balancing (Application Load Balancer) distributes traffic from Varnish Cache across the AWS Auto Scaling group of Magento instances in multiple Availability Zones.
-* Magento web server on Amazon Ec2 instances launched in the private subnets.
-* Amazon Elasticsearch Service for Magento catalog search.
-* An Amazon ElastiCache cluster with the Redis cache engine launched in the private subnets.
-* Either an Amazon RDS for MySQL or an Amazon Aurora database engine deployed via Amazon RDS in the first private subnet. If you choose Multi-AZ deployment, a synchronously replicated secondary database is deployed in the second private subnet. This provides high availability and built-in automated failover from the primary database.
-* Amazon S3 created as remote storage for web server instances to store shared media files.
-* Amazon MQ (optional) is a message broker that offers a reliable, highly available, scalable, and portable messaging system. The Message Queue Framework (MQF) is a system that allows a https://glossary.magento.com/module[module^] to publish messages to queues for https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[Magento flow^]. It also defines the consumers that will receive the messages asynchronously. Bulk operations are actions that are performed on a large scale. Example bulk operations tasks include importing or exporting items, changing prices on a mass scale, and assigning products to a warehouse. For each individual task of a bulk operation, the system creates a message that is published in a https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[message queue^] and processed by background consumer runs. For more insights in bulk-operations, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/message-queues/bulk-operations.html[Adobe Devdocs documentation^].
-
-=== Magento Components
-
-This Quick Start deploys Magento Open Source (2.4.3) with the following prerequisite
-software:
-
-* Operating system: Amazon Linux x86-64 or Debian
-* Web server: NGINX
-* Database: Amazon RDS for MySQL 5.6 or Amazon Aurora 5.7
-* Programming language: PHP 7.4, including the required extensions
-* Message broker: Amazon 3.8.11
-* Database Cache: Amazon ElastiCache Redis 6.x
-* Page Cache: Varnish 6.5
-* Content Catalog Search: Amazon ElasticSearch 7.10
-
-This Quick Start deploys Magento sample data, which lets you experiment with custom
-themes and view the web store. The Quick Start mounts an Amazon EFS file system as
-a drive within the webserver nodes and installs common media assets in the Amazon 
-EFS file system. +
-{blank} +
-For more information about these utilities, see how to 
-http://devdocs.magento.com/guides/v2.0/install-gde/prereq/zip_install.html[install the Magento archive on your server^]
-on the Adobe Commerce website.
-
-=== Design Considerations
-
-Adobe Commerce powered by Magento is a robust e-commerce platform that can be deployed
-with a variety of options, depending on your needs. This Quick Start provides a great
-starting point for building your e-commerce solution rapidly with Magento on the AWS
-Cloud. The following sections discuss design considerations for large-scale deployments
-and options for optimizing performance.
 
 === Amazon Aurora and Amazon RDS for MySQL
 
@@ -282,13 +163,6 @@ is commonly used for log analytics, full-text search, security intelligence, bus
 analytics, and operational intelligence use cases.As of version 2.4.3, Magento supports
 using Elasticsearch (ES) provided by Amazon Web Services (AWS).
 
-== Troubleshooting
-
-*Q.* I encountered a Terraform error when deploying.
-
-*A.* Terraform can sometimes timeout when interacting with the AWS API. It is usually
-best to do a terraform destroy and then do terraform apply when encountering these 
-errors.
 
 == Security
 

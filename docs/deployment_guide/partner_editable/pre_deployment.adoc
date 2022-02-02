@@ -1,0 +1,3 @@
+//Include any pre-deployment steps here, such as signing up for a Marketplace AMI or making any changes to a Partner account. If there are none leave this file empty.
+
+== Pre deployment steps

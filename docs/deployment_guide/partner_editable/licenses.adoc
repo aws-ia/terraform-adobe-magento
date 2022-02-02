@@ -1,0 +1,6 @@
+// Include details about any licenses and how to sign up. Provide links as appropriate.
+
+This deployment launches Magento Open Source automatically into a configuration of your choice. You are responsible for the cost of the AWS services used while running this Quick Start reference deployment. There is no cost to use this Quick Start, however you will be billed for the resources deployed. For more information see the  https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide]. +
+{blank} +
+This Quick Start uses Magento Open Source (formerly Community Edition), which is open-source software distributed under the Open Software License (OSL 3.0).
+

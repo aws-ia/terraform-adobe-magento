@@ -1,0 +1,16 @@
+This Quick Start deploys {partner-product-name} on the AWS Cloud. If you are unfamiliar with AWS Quick Starts we recommend that you read the https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide].
+
+// This deployment guide covers the steps necessary to deploy the Quick Start. For more advanced information on the product, troubleshooting, or additional functionality, see the https://{quickstart-github-org}.github.io/{quickstart-project-name}/operational/index.html[Operational guide].
+
+// For information on using this Quick Start for migrations, see the https://{quickstart-github-org}.github.io/{quickstart-project-name}/migration/index.html[Migration guide].
+This deployment guide discusses best practices for deploying Magento on AWS using services such as Amazon Elastic Compute Cloud (Amazon EC2), Amazon Virtual Private Cloud (Amazon VPC), Amazon Relational Database Service (Amazon RDS), Amazon ElastiCache, Amazon Elasticsearch, Amazon MQ and Amazon Simple Storage Service (Amazon S3). +
+{blank} +
+The guide is for IT infrastructure architects, administrators, and DevOps professionals who are planning to implement or extend their Adobe Commerce powered Magento by community editions workloads on the AWS Cloud using the https://github.com/aws-ia/terraform-adobe-magento[Magento terraform Quick Start on Amazon Web Services (AWS)^].
+
+=== Magento on AWS
+
+https://magento.com/products/magento-open-source[Magento is an open-source content management system for^] e-commerce websites. AWS enables you to set up the infrastructure to support Adobe Commerce deployment in a flexible, scalable, and cost-effective manner in the AWS Cloud. This reference deployment will help you rapidly build a Magento Open Source cluster by automating configuration and deployment tasks. +
+{blank} +
+The automated deployment builds a cluster that runs Magento version 2.4.3 or higher along with optional sample data. +
+{blank} +
+This guide covers the deployment of https://magento.com/products/magento-open-source[Magento^] Open Source in the AWS Cloud. It does not provide Magento product usage information. For general guidance and best practices for using Magento, see the http://docs.magento.com/m2/ce/user_guide/getting-started.html[Magento User Guide^] on the  Adobe Commerce website.

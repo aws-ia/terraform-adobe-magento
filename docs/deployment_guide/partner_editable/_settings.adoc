@@ -1,0 +1,14 @@
+:quickstart-project-name: terraform-adobe-magento
+:quickstart-github-org: aws-ia
+:partner-product-name: Magento - Adobe Commerce
+:partner-product-short-name: Adobe Magento
+:partner-company-name: Shero Commerce
+:doc-month: January
+:doc-year: 2022
+:partner-contributors: James Cowie, Pat McManaman, and Mikko Sivula, {partner-company-name}
+//:other-contributors: Akua Mansa, Trek10
+:aws-contributors: Kenny Rajan and Vikram Mehto, AWS Solutions Architect
+:aws-ia-contributors: Dan Taoka, AWS Integration and Automation team
+:deployment_time: 45-60 minutes
+:default_deployment_region: us-east-1
+// :private_repo:
