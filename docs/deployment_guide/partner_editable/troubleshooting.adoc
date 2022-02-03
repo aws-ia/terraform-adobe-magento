@@ -1,6 +1,6 @@
-*Q.* I encountered a Terraform error when deploying.
-
-*A.* Terraform can sometimes timeout when interacting with the AWS API. It is usually
+[qanda]
+I encountered a Terraform error when deploying.::
+Terraform can sometimes timeout when interacting with the AWS API. It is usually
 best to do a terraform destroy and then do terraform apply when encountering these 
 errors.
 

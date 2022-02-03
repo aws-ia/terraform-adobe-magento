@@ -7,7 +7,7 @@ image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
-=== AWS Components
+*AWS Components*
 
 Running this Quick Start with default parameters for a new VPC deploys and configures a VPC that spans two Availability Zones. Each Availability Zone is configured with a private and a public subnet. This Quick Start deploys the following AWS components in the AWS Cloud:
 
@@ -30,7 +30,7 @@ Architecture Flow of AWS Components
 * Amazon S3 created as remote storage for web server instances to store shared media files.
 * Amazon MQ (optional) is a message broker that offers a reliable, highly available, scalable, and portable messaging system. The Message Queue Framework (MQF) is a system that allows a https://glossary.magento.com/module[module^] to publish messages to queues for https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[Magento flow^]. It also defines the consumers that will receive the messages asynchronously. Bulk operations are actions that are performed on a large scale. Example bulk operations tasks include importing or exporting items, changing prices on a mass scale, and assigning products to a warehouse. For each individual task of a bulk operation, the system creates a message that is published in a https://devdocs.magento.com/guides/v2.4/config-guide/mq/rabbitmq-overview.html[message queue^] and processed by background consumer runs. For more insights in bulk-operations, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/message-queues/bulk-operations.html[Adobe Devdocs documentation^].
 
-=== Magento Components
+*Magento Components*
 
 This Quick Start deploys Magento Open Source (2.4.3) with the following prerequisite
 software:

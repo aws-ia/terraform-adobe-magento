@@ -1,3 +1,23 @@
 //Include any post-deployment steps here, such as steps necessary to test that the deployment was successful. If there are no post-deployment steps leave this file empty.
 
 == Post deployment steps
+
+*Test the deployment*
+
+After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to the web node:
+
+`+ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP+`
+
+_Note:_ Ensure that you have SSH key forwarding enabled.
+
+*Clean up the infrastructure*
+
+_Note:_ If you want to retain the Magento files stored in your Amazon S3 bucket, copy and save the bucket's objects before completing this step.
+
+When you no longer need the infrastructure, run one of the following commands to remove it:
+
+`+terraform destroy+`
+
+`+terraform destroy -var-file="$HOME/.aws/terraform.tfvars+`
+
+After you remove the infrastructure, the database is stored as an artifact.

@@ -2,7 +2,7 @@ There are a number of options when deploying this Quick Start and can be control
 
 Adobe Commerce powered by Magento is a robust e-commerce platform that can be deployed with a variety of options, depending on your needs. This Quick Start provides a great starting point for building your e-commerce solution rapidly with Magento on the AWS Cloud. The following sections discuss design considerations for large-scale deployments and options for optimizing performance.
 
-=== Amazon Aurora and Amazon RDS for MySQL
+*Amazon Aurora and Amazon RDS for MySQL*
 
 By default, this Quick Start uses Amazon Aurora, but you can deploy Amazon RDS for MySQL instead by setting a template parameter during deployment. If you choose Amazon Aurora, but it is not available in the selected AWS Region (please check the  https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/[region table^]), you will not be able to launch the Quick Start. +
 {blank} +
@@ -15,7 +15,7 @@ Amazon RDS supports three types of storage: Magnetic, General Purpose (SSD), and
 {blank} +
 To enhance availability and reliability for production workloads, you should use the Multi-AZ deployment option. This provides an automated failover from the primary databaseto a synchronously replicated secondary database that is running in a different Availability Zone. This option also enables you to scale out beyond the capacity of a single database for read-heavy database workloads.
 
-=== Amazon EC2 Web Server Instances
+*Amazon EC2 Web Server Instances*
 
 The deployment installs NGINX on EC2 instances running Amazon Linux x86-64. Elastic Load Balancing is used to automatically distribute the website load across these instances. In addition, all the instances are launched in an Auto Scaling group that dynamically manages the Amazon EC2 fleet. The deployment sets low and high CPU utilization thresholds to automatically scale the number of EC2 instances up or down depending on load. Default policy adds new instances when the CPU load exceeds 90% for 10 minutes, and removes instances when the CPU load drops below 70% for 10 minutes. +
 {blank} +
@@ -23,37 +23,37 @@ You can specify the maximum number of instances in the Auto Scaling group, and A
 {blank} +
 The Quick Start supports a variety of EC2 instance types. We recommend that you benchmark the cluster to make sure you achieve the level of performance you need before starting a production deployment. For high availability, we recommend using at least two web server instances in different Availability Zones.
 
-=== Amazon Simple Storage Service (Amazon S3)
+*Amazon Simple Storage Service (Amazon S3)*
 
 When you deploy Magento with this Quick Start, Amazon S3 is configured as a Remote Storage module. This provides the option to store media files and schedule imports/exports in a persistent, remote storage container using a storage service. +
 {blank} +
 Amazon S3 is an object storage service with a simple interface that enables you to create and configure storage quickly and easily. Multiple EC2 instances can access an Amazon S3 storage at the same time using the Magento remote storage option, providing a common data source for workloads and applications running on more than one instance.
 
-=== Amazon ElastiCache
+*Amazon ElastiCache*
 
 Amazon ElastiCache is a web service that helps you deploy and operate an in-memory cache in the AWS Cloud. This Quick Start automatically deploys an ElastiCache cluster using the Redis caching engine. ElastiCache reduces the operational overhead involved in deploying a distributed caching environment, and provides a way to improve application load times. For more information, see the http://aws.amazon.com/documentation/elasticache/[Amazon ElastiCache documentation^].
 
-=== Elasticsearch
+*Elasticsearch*
 
 Elasticsearch is a distributed search and analytics engine built on Apache Lucene. Since its release in 2010, Elasticsearch has quickly become the most popular search engine and is commonly used for log analytics, full-text search, security intelligence, business analytics, and operational intelligence use cases.As of version 2.4.3, Magento supports using Elasticsearch (ES) provided by Amazon Web Services (AWS).
 
-== Security
+*Security*
 
 The AWS Cloud provides a scalable, highly reliable platform that helps customers  deploy applications and data quickly and securely. +
 {blank} +
 When you build systems on the AWS infrastructure, security responsibilities are shared between you and AWS. This shared model can reduce your operational burden as AWS operates, manages, and controls the components from the host operating system and virtualization layer down to the physical security of the facilities in which the services operate. In turn, you assume responsibility and management of the guest operating system (including updates and security patches), other associated applications, as well as the configuration of the AWS-provided security group firewall. For more information about security on AWS, visit the http://aws.amazon.com/security/[AWS Security Center^].
 
-=== AWS Identity and Access Management (IAM)
+*AWS Identity and Access Management (IAM)*
 
 This solution leverages an IAM role with least privileged access. It is not necessary or recommended to store SSH keys, secret keys, or access keys on the provisioned instances.
 
-=== OS Security
+*OS Security*
 
 The root user on cluster nodes can be accessed only by using the SSH key specified during the deployment process. AWS doesn't store these SSH keys, so if you lose your SSH key you can lose access to these instances. +
 {blank} +
 Operating system patches are your responsibility and should be performed on a periodic basis.
 
-=== Security Groups
+*Security Groups*
 
 A security group acts as a firewall that controls the traffic for one or more instances. When you launch an instance, you associate one or more security groups with the instance. You add rules to each security group that allow traffic to or from its associated instances. You can modify the rules for a security group at any time. The new rules are automatically applied to all instances that are associated with the security group. +
 {blank} +

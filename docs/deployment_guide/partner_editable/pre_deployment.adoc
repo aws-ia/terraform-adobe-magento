@@ -1,3 +1,117 @@
 //Include any pre-deployment steps here, such as signing up for a Marketplace AMI or making any changes to a Partner account. If there are none leave this file empty.
 
 == Pre deployment steps
+*Install Terraform*
+
+See [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+
+*Sign up for Terraform Cloud*
+
+Log in to [Terraform Cloud](https://app.terraform.io/signup/account). If you don't have an account, you can sign up for a free tier.
+
+*Configure Terraform Cloud API access*
+
+Generate a Terraform Cloud token:
+
+`+terraform login+`
+
+Export the `TERRAFORM_CONFIG` variable:
+
+`+export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"+`
+
+*Configure the `tfvars` file*
+
+Example path:
+
+`+$HOME/.aws/terraform.tfvars+`
+
+An example of the `tfvars` file contents:
+
+`+AWS_SECRET_ACCESS_KEY = "{insert secret access key}"+`
+
+`+AWS_ACCESS_KEY_ID = "{insert access key ID}"+`
+
+`+AWS_SESSION_TOKEN = "{insert session token}"+`
+
+_Note:_ We recommend using Security Token Service (AWS STS)–based credentials.
+
+_Warning:_ Follow best practices for managing secrets, and ensure that your credentials are not stored in a public repository.
+
+_Note:_ Before deployment, you must create both an AWS key pair and a Magento deployment key.
+
+*Create an AWS key pair*
+
+To create a key pair, see [Prepare an AWS Account](https://docs.aws.amazon.com/quickstart/latest/magento/step1.html).
+
+_Note the key-pair name because you will use it during the deployment._
+
+*Store the private key in AWS Secrets Manager as plaintext*
+
+. Navigate to AWS Secrets Manager in the AWS Management Console.
+. Store a new secret.
+. Choose **Other type of secrets**.
+. Choose **Plaintext**.
+. Clear the `{"":""}` JSON format from the **Plaintext** section.
+. Copy and paste the private-key contents that you previously created.
+. Select the encryption key, and choose **Next**. 
+. Set secret name to `ssh-key-admin`, and choose **Next**.
+. Set **Automatic rotation** to **Disabled**, and choose **Next**.
+. Review and store the key.
+
+*Create Magento deployment keys*
+
+To create Magento deployment keys, see [Get your authentication keys](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html). This deployment uses [Composer](https://getcomposer.org/) to manage Magento components and their dependencies. For more information, see [Magento Composer](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/intro/intro-composer.html).
+
+* Create a Magento public-authentication key for your Composer user name.
+* Create a Magento public-authentication key for your Composer password.
+
+_Note these values because you will use them during the deployment._
+
+
+*Deploy the module (Linux and iOS)*
+
+. Clone the repository.
+. Navigate to the repository's root directory.
+. Navigate to the `setup_workspace` directory:
+
+`+cd setup_workspace+`
+
+. Run the following commands in order:
+.. `+terraform init+`
+.. `+terraform apply -var-file="$HOME/.aws/terraform.tfvars"+`
+
+. You are asked for the following:
+.. The AWS Region where you want to deploy this module. This must match the Region where you generated the key pair.
+.. The organization under which Terraform Cloud runs. This can be found in the Terraform Cloud console.
+.. Setup confirmation.
+
+_Terraform Cloud creates the workspace, which contains the Terraform Cloud organization name._
+
+. Navigate to the directory, and deploy Magento (the previous `terraform init` command generates `backend.hcl`):
+.. `+cd ../deploy+`
+.. Open, edit, and review all of the variables in the `variables.tf` file.
+.. Update the `default=` value for your deployment.
+.. The `description=` provides additional context for each variable.
+
+. The following items must be edited before deployment:
+* Project-specific: `domain_name`
+* Magento information: `mage_composer_username`
+* Magento information: `mage_composer_password`
+* Magento information: `magento_admin_password`
+* Magento information: `magento_admin_email`
+* Database: `magento_database_password`
+
+_Important:_ Don't store secret information in a public repository.
+
+. After you review and update the `./deploy/variables.tf` file, run one of the following Terraform commands:
+
+* `+terraform apply+`
+* `+terraform apply -var-file="$HOME/.aws/terraform.tfvars"+`
+
+Terraform apply runs remotely in Terraform Cloud and takes about 30–60 minutes to deploy.
+
+During the deployment, you should receive an AWS email to allow Amazon SES to send you emails. Verify this before you log in to Magento.
+
+After the Terraform deployment completes, an output shows the relevant information for accessing Magento.
+
+_Important:_ After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
