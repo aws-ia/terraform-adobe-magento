@@ -1,13 +1,12 @@
 //Include any pre-deployment steps here, such as signing up for a Marketplace AMI or making any changes to a Partner account. If there are none leave this file empty.
 
-== Pre deployment steps
 *Install Terraform*
 
-See [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+See https://learn.hashicorp.com/tutorials/terraform/install-cli[Install Terraform].
 
 *Sign up for Terraform Cloud*
 
-Log in to [Terraform Cloud](https://app.terraform.io/signup/account). If you don't have an account, you can sign up for a free tier.
+Log in to https://app.terraform.io/signup/account[Terraform Cloud]. If you don't have an account, you can sign up for a free tier.
 
 *Configure Terraform Cloud API access*
 
@@ -41,7 +40,7 @@ _Note:_ Before deployment, you must create both an AWS key pair and a Magento de
 
 *Create an AWS key pair*
 
-To create a key pair, see [Prepare an AWS Account](https://docs.aws.amazon.com/quickstart/latest/magento/step1.html).
+To create a key pair, see https://docs.aws.amazon.com/quickstart/latest/magento/step1.html[Prepare an AWS Account].
 
 _Note the key-pair name because you will use it during the deployment._
 
@@ -60,7 +59,7 @@ _Note the key-pair name because you will use it during the deployment._
 
 *Create Magento deployment keys*
 
-To create Magento deployment keys, see [Get your authentication keys](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html). This deployment uses [Composer](https://getcomposer.org/) to manage Magento components and their dependencies. For more information, see [Magento Composer](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/intro/intro-composer.html).
+To create Magento deployment keys, see https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html[Get your authentication keys]. This deployment uses https://getcomposer.org/[Composer] to manage Magento components and their dependencies. For more information, see https://devdocs.magento.com/guides/v2.4/extension-dev-guide/intro/intro-composer.html[Magento Composer].
 
 * Create a Magento public-authentication key for your Composer user name.
 * Create a Magento public-authentication key for your Composer password.
@@ -103,15 +102,4 @@ _Terraform Cloud creates the workspace, which contains the Terraform Cloud organ
 
 _Important:_ Don't store secret information in a public repository.
 
-. After you review and update the `./deploy/variables.tf` file, run one of the following Terraform commands:
-
-* `+terraform apply+`
-* `+terraform apply -var-file="$HOME/.aws/terraform.tfvars"+`
-
-Terraform apply runs remotely in Terraform Cloud and takes about 30–60 minutes to deploy.
-
-During the deployment, you should receive an AWS email to allow Amazon SES to send you emails. Verify this before you log in to Magento.
-
-After the Terraform deployment completes, an output shows the relevant information for accessing Magento.
-
-_Important:_ After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
+. After you review and update the `./deploy/variables.tf` file, see the Deployment section.

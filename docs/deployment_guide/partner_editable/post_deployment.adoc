@@ -1,6 +1,12 @@
 //Include any post-deployment steps here, such as steps necessary to test that the deployment was successful. If there are no post-deployment steps leave this file empty.
 
-== Post deployment steps
+Terraform apply runs remotely in Terraform Cloud and takes about 30–60 minutes to deploy.
+
+During the deployment, you should receive an AWS email to allow Amazon SES to send you emails. Verify this before you log in to Magento.
+
+After the Terraform deployment completes, an output shows the relevant information for accessing Magento.
+
+_Important:_ After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
 
 *Test the deployment*
 
