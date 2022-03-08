@@ -162,3 +162,9 @@ fi
 sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento cache:flush
 
 echo flushall >/dev/tcp/${MAGENTO_REDIS_CACHE_HOST}/6379
+
+### set permissions per https://devdocs.magento.com/guides/v2.4/config-guide/prod/prod_file-sys-perms.html
+cd /var/www/html/magento
+find app/code var/view_preprocessed vendor pub/static app/etc generated/code generated/metadata \( -type f -or -type d \) -exec chmod u-w {} + && chmod o-rwx app/etc/env.php
+chmod u+x bin/magento
+chmod -R u+w .
