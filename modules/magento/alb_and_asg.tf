@@ -325,6 +325,7 @@ data "template_file" "magento_userdata" {
 #!/bin/bash
 sleep $[ ( $RANDOM % 10 )  + 1 ]s
 crontab -r
+rm /etc/sudoers.d/91-magento
 sudo su - magento -c "/opt/ec2_install/scripts/magento-setup.sh"
   EOF
 }
