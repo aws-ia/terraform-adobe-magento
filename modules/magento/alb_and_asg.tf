@@ -324,7 +324,7 @@ data "template_file" "magento_userdata" {
   template = <<EOF
 #!/bin/bash
 sleep $[ ( $RANDOM % 10 )  + 1 ]s
-crontab -r
+sudo -u admin crontab -r
 rm /etc/sudoers.d/91-magento
 sudo su - magento -c "/opt/ec2_install/scripts/magento-setup.sh"
   EOF
@@ -378,7 +378,7 @@ resource "aws_autoscaling_attachment" "asg_attachment_magento_alb" {
 data "template_file" "varnish_userdata" {
   template = <<EOF
 #!/bin/bash
-crontab -r
+sudo -u admin crontab -r
 sed -i "s/DNS_RESOLVER/${cidrhost(var.vpc_cidr, "2")}/g" /etc/nginx/conf.d/varnish.conf
 sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/nginx/conf.d/varnish.conf
 sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/varnish/backends.vcl
