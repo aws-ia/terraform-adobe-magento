@@ -17,8 +17,6 @@ if [ $? -eq 0 ]; then
   $BASEDIR/scripts/install_php_amzn.sh "$BASEDIR"
 fi
 
-echo "magento ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/91-magento
-
 sudo pip3 install boto3
 sudo pip3 install --upgrade awscli
 
