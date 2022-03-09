@@ -15,6 +15,11 @@ sudo chmod +x $BASEDIR/scripts/magento_vars.py
 
 sudo cp -a $VARIABLE_TEMP_FILE /opt/
 
+sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
+sudo cp ~admin/.ssh/authorized_keys ~magento/.ssh/
+sudo chown magento. ~magento/.ssh/authorized_keys
+sudo chmod 600 ~magento/.ssh/authorized_keys
+
 MAGENTO_DB_HOST=$(grep 'magento_database_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_DB_PASS=$(grep 'magento_database_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_REDIS_CACHE_HOST=$(grep 'magento_cache_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
@@ -140,10 +145,6 @@ then
 
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento maintenance:disable
     
-    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
-    sudo cp ~/.ssh/authorized_keys ~magento/.ssh/
-    sudo chown magento. ~magento/.ssh/authorized_keys
-    sudo chmod 600 ~magento/.ssh/authorized_keys
     sudo aws s3 cp /home/magento/.ssh/id_rsa.pub s3://${MAGENTO_BUCKET}/sync/master.pub
     sudo aws s3 cp $PRIVATEIPFILE s3://${MAGENTO_BUCKET}/sync/
 
@@ -155,10 +156,6 @@ then
     sudo -u magento echo "*/2 * * * * /bin/bash /home/magento/sync.sh" | sudo -u magento tee -a /tmp/tmpcron
     sudo -u magento crontab /tmp/tmpcron
 else
-    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
-    sudo cp ~/.ssh/authorized_keys ~magento/.ssh/
-    sudo chown magento. ~magento/.ssh/authorized_keys
-    sudo chmod 600 ~magento/.ssh/authorized_keys
     sudo -u magento aws s3 cp s3://${MAGENTO_BUCKET}/sync/master.pub /home/magento/master.pub
     sudo -u magento cat /home/magento/master.pub >> /home/magento/.ssh/authorized_keys
     sudo chmod 600 /home/magento/.ssh/authorized_keys
