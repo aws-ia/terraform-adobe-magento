@@ -53,7 +53,7 @@ Webshop will be available at: https://${module.magento.magento_frontend_url}/ on
 Bastion host and Magento webserver IPs can be found from the AWS Console.
 
 You can connect to web node with the following:
-ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP
+ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP magento@WEB_NODE_PRIVATE_IP
 
 Ensure you have SSH key forwarding enabled.
 README
