@@ -148,7 +148,7 @@ After the Terraform deployment completes, an output shows the relevant informati
 After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to the web node:
 
 ```
-ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP admin@WEB_NODE_PRIVATE_IP
+ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP magento@WEB_NODE_PRIVATE_IP
 ```
 
 > Note: Ensure that you have SSH key forwarding enabled.

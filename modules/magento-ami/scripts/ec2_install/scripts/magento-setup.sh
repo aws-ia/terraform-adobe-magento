@@ -15,6 +15,11 @@ sudo chmod +x $BASEDIR/scripts/magento_vars.py
 
 sudo cp -a $VARIABLE_TEMP_FILE /opt/
 
+sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
+sudo cp ~admin/.ssh/authorized_keys ~magento/.ssh/
+sudo chown magento. ~magento/.ssh/authorized_keys
+sudo chmod 600 ~magento/.ssh/authorized_keys
+
 MAGENTO_DB_HOST=$(grep 'magento_database_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_DB_PASS=$(grep 'magento_database_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_REDIS_CACHE_HOST=$(grep 'magento_cache_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
@@ -140,7 +145,6 @@ then
 
     sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento maintenance:disable
     
-    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
     sudo aws s3 cp /home/magento/.ssh/id_rsa.pub s3://${MAGENTO_BUCKET}/sync/master.pub
     sudo aws s3 cp $PRIVATEIPFILE s3://${MAGENTO_BUCKET}/sync/
 
@@ -152,7 +156,6 @@ then
     sudo -u magento echo "*/2 * * * * /bin/bash /home/magento/sync.sh" | sudo -u magento tee -a /tmp/tmpcron
     sudo -u magento crontab /tmp/tmpcron
 else
-    sudo -u magento sh -c 'ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""'
     sudo -u magento aws s3 cp s3://${MAGENTO_BUCKET}/sync/master.pub /home/magento/master.pub
     sudo -u magento cat /home/magento/master.pub >> /home/magento/.ssh/authorized_keys
     sudo chmod 600 /home/magento/.ssh/authorized_keys
@@ -162,3 +165,11 @@ fi
 sudo -u magento php -d memory_limit=-1 /var/www/html/magento/bin/magento cache:flush
 
 echo flushall >/dev/tcp/${MAGENTO_REDIS_CACHE_HOST}/6379
+
+sudo rm /etc/sudoers.d/91-magento
+
+### set permissions per https://devdocs.magento.com/guides/v2.4/config-guide/prod/prod_file-sys-perms.html
+cd /var/www/html/magento
+find app/code var/view_preprocessed vendor pub/static app/etc generated/code generated/metadata \( -type f -or -type d \) -exec chmod u-w {} + && chmod o-rwx app/etc/env.php
+chmod u+x bin/magento
+chmod -R u+w .
