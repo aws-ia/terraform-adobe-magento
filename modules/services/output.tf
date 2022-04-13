@@ -7,7 +7,7 @@ output "redis_cache_host" {
 }
 
 output "magento_database_host" {
-  value = aws_db_instance.magento_db.endpoint
+  value = var.use_aurora ? "${aws_rds_cluster.magento_db_aurora[0].endpoint}" : "${aws_db_instance.magento_db[0].endpoint}"
 }
 
 output "magento_elasticsearch_host" {

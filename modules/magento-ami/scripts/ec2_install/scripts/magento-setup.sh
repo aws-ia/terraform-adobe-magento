@@ -29,7 +29,7 @@ MAGENTO_MQ_HOST=$(grep 'magento_rabbitmq_host:' ${VARIABLE_TEMP_FILE} | tail -n1
 MAGENTO_MQ_USER=$(grep 'magento_rabbitmq_username:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_MQ_PASS=$(grep 'rabbitmq_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_VARNISH_HOST=$(hostname --all-ip-addresses | awk '{$1=$1;print}')
-BASE_DOMAIN=$(grep 'cloudfront_domain:' /tmp/discovered-vars | tail -n1 | awk '{ print $2}')
+BASE_DOMAIN=$(grep 'cloudfront_domain:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_CRYPT_KEY=$(grep 'magento_crypt_key:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_FILES_S3=$(grep 'magento_files_s3:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_CRYPT_KEY=$(grep 'magento_crypt_key:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
@@ -44,6 +44,8 @@ MAGENTO_BUCKET=$(echo $MAGENTO_FILES_S3 | cut -d. -f1)
 
 sudo sed -i "s/AWS_BUCKET/$MAGENTO_FILES_S3/g" /etc/nginx/conf.d/magento.conf
 sudo systemctl restart nginx
+
+mysql -h "${MAGENTO_DB_HOST}" -u magento -p"${MAGENTO_DB_PASS}" -e"GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'%' ;"
 
 if [ ! -d "/mnt/efs/magento" ]
 then

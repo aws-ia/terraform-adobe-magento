@@ -24,6 +24,7 @@ module "magento" {
   elasticsearch_domain      = var.elasticsearch_domain
   rabbitmq_username         = var.rabbitmq_username
   management_addresses      = var.management_addresses
+  use_aurora                = var.use_aurora
 
   vpc_cidr = var.vpc_cidr
   ###
@@ -37,4 +38,5 @@ module "magento" {
   vpc_private2_subnet_id = var.vpc_private2_subnet_id
   vpc_rds_subnet_id      = var.vpc_rds_subnet_id
   vpc_rds_subnet2_id     = var.vpc_rds_subnet2_id
+
 }

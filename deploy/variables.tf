@@ -140,6 +140,12 @@ variable "magento_admin_email" {
 #############
 # Database  #
 #############
+variable "use_aurora" {
+  type        = bool
+  description = "Use Aurora or RDS"
+  default     = true
+}
+
 variable "magento_database_password" {
   type        = string
   description = "Password for Magento DB."
