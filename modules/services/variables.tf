@@ -194,3 +194,9 @@ variable "ec2_instance_type_rds" {
 variable "mq_instance_type" {
   default = "mq.m5.large"
 }
+
+variable "use_aurora" {
+  type        = bool
+  description = "Use Aurora or RDS"
+  default     = true
+}

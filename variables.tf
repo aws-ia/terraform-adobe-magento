@@ -232,3 +232,9 @@ variable "vpc_rds_subnet_id" {
 variable "vpc_rds_subnet2_id" {
   type = string
 }
+
+variable "use_aurora" {
+  type        = bool
+  description = "Use Aurora or RDS"
+  default     = true
+}

@@ -99,6 +99,8 @@ module "services" {
   sg_restricted_https_in_id = module.base.sg_restricted_https_in_id
   sg_efs_private_in_id      = module.base.sg_efs_private_in_id
 
+  use_aurora                = var.use_aurora
+
   depends_on = [
     module.base
   ]
