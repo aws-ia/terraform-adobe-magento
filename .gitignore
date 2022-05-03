@@ -46,3 +46,5 @@ backend.hcl
 
 # Desktop Service Store
 **/.DS_Store
+go.mod
+go.sum
