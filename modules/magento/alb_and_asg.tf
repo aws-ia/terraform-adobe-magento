@@ -2,12 +2,18 @@
 # | Load balancers |
 # ------------------
 
+resource "random_string" "rnd_string" {
+  length  = 6
+  special = false
+  upper   = false
+}
+
 resource "aws_s3_bucket" "lb_logs" {
-  bucket = "${var.project}-lb-logs-bucket"
+  bucket = "${var.project}-lb-logs-bucket-${random_string.rnd_string.result}"
   acl    = "private"
 
   tags = {
-    Name      = "${var.project}-lb-logs-bucket"
+    Name      = "${var.project}-lb-logs-bucket-${random_string.rnd_string.result}"
     Terraform = true
   }
 }
