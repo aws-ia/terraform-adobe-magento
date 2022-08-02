@@ -32,6 +32,10 @@ resource "aws_elasticsearch_domain" "es" {
     enabled = true
   }
 
+  node_to_node_encryption {
+    enabled = true
+  }
+
   ebs_options {
     ebs_enabled = true
     volume_size = 10

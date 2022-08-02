@@ -82,7 +82,7 @@ resource "aws_security_group" "allow_all_out" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/1", "128.0.0.0/1"]
   }
   vpc_id = local.vpc_id
 
@@ -147,7 +147,7 @@ resource "aws_security_group" "all_http_in" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/1", "128.0.0.0/1"]
   }
   vpc_id = local.vpc_id
 
@@ -170,7 +170,7 @@ resource "aws_security_group" "all_https_in" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/1", "128.0.0.0/1"]
   }
   vpc_id = local.vpc_id
 

@@ -44,4 +44,8 @@ resource "aws_launch_configuration" "bastion_launch_cfg" {
   lifecycle {
     create_before_destroy = true
   }
+
+  metadata_options {
+    http_tokens = "required"
+  } 
 }

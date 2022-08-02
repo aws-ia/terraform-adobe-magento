@@ -16,6 +16,14 @@ resource "aws_instance" "magento_instance" {
   vpc_security_group_ids      = [aws_security_group.management_ssh_in.id, var.sg_allow_all_out_id]
   iam_instance_profile        = aws_iam_instance_profile.magento_ami_host_profile.id
 
+  root_block_device {
+    encrypted = true
+  }
+
+  ebs_block_device {
+    encrypted = true
+  }
+
   provisioner "file" {
     source      = "${path.module}/scripts/ec2_install"
     destination = "/tmp/"
@@ -46,12 +54,15 @@ resource "aws_instance" "magento_instance" {
 
   }
 
-
   tags = {
     Name        = "magento-ami-instance"
     Description = "EC2 for creating the Magento AMI"
     Terraform   = true
   }
+
+  metadata_options {
+    http_tokens = "required"
+  } 
 }
 
 resource "random_pet" "ami" {

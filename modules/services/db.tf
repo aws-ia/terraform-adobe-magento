@@ -96,7 +96,7 @@ resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
   instance_class               = var.ec2_instance_type_rds
   db_subnet_group_name         = "magento-rds"
   publicly_accessible          = false
-  performance_insights_enabled = var.magento_db_performance_insights_enabled
+  performance_insights_enabled = false
 
   timeouts {
     create = "60m"
