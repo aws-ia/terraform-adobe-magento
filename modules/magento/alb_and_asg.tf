@@ -113,15 +113,15 @@ resource "aws_alb_listener" "alb_listener_https" {
 ###
 
 resource "aws_alb" "alb_internal" {
-  name            = "alb-internal"
-  internal        = true
-  security_groups = [ var.sg_allow_all_out_id,
-                      var.sg_bastion_http_in_id,
-                      aws_security_group.internal_http_in.id,
-                      aws_security_group.internal_ssh_in.id,
-                      aws_security_group.internal_ssh_out.id
-                    ]
-  subnets = [var.private_subnet_id,var.private2_subnet_id]
+  name     = "alb-internal"
+  internal = true
+  security_groups = [var.sg_allow_all_out_id,
+    var.sg_bastion_http_in_id,
+    aws_security_group.internal_http_in.id,
+    aws_security_group.internal_ssh_in.id,
+    aws_security_group.internal_ssh_out.id
+  ]
+  subnets = [var.private_subnet_id, var.private2_subnet_id]
 
   # Deletion production should be true in production environment if we don't automatically generate varnish VCL
   enable_deletion_protection = false
@@ -220,8 +220,8 @@ resource "aws_autoscaling_group" "magento" {
   desired_capacity  = var.magento_autoscale_desired
   health_check_type = "EC2"
   launch_template {
-    id         = "${aws_launch_template.magento_launch_template.id}"
-    version = "${aws_launch_template.magento_launch_template.latest_version}"
+    id      = aws_launch_template.magento_launch_template.id
+    version = aws_launch_template.magento_launch_template.latest_version
   }
   vpc_zone_identifier  = [var.private_subnet_id, var.private2_subnet_id]
   termination_policies = ["NewestInstance"]
@@ -301,8 +301,8 @@ resource "aws_autoscaling_group" "varnish" {
   desired_capacity  = var.varnish_autoscale_desired
   health_check_type = "EC2"
   launch_template {
-    id         = "${aws_launch_template.varnish_launch_template.id}"
-    version = "${aws_launch_template.varnish_launch_template.latest_version}"
+    id      = aws_launch_template.varnish_launch_template.id
+    version = aws_launch_template.varnish_launch_template.latest_version
   }
   vpc_zone_identifier = [var.private_subnet_id, var.private2_subnet_id]
 
@@ -359,11 +359,11 @@ resource "aws_launch_template" "magento_launch_template" {
     device_name = "/dev/xvda"
     ebs {
       volume_size = 20
-      encrypted = true
+      encrypted   = true
     }
   }
 
-  user_data = "${base64encode(data.template_file.magento_userdata.rendered)}"
+  user_data = base64encode(data.template_file.magento_userdata.rendered)
 
   lifecycle {
     create_before_destroy = true
@@ -413,11 +413,11 @@ resource "aws_launch_template" "varnish_launch_template" {
     device_name = "/dev/xvda"
     ebs {
       volume_size = 20
-      encrypted = true
+      encrypted   = true
     }
   }
 
-  user_data = "${base64encode(data.template_file.varnish_userdata.rendered)}"
+  user_data = base64encode(data.template_file.varnish_userdata.rendered)
 
   lifecycle {
     create_before_destroy = true
@@ -436,7 +436,7 @@ resource "aws_autoscaling_attachment" "asg_attachment_varnish_alb" {
 resource "aws_ssm_parameter" "magento_autoscale_name" {
   name  = "/magento_autoscale_name"
   type  = "String"
-  value = "${aws_launch_template.magento_launch_template.name}"
+  value = aws_launch_template.magento_launch_template.name
   tags = {
     Terraform = true
   }

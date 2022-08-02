@@ -30,23 +30,23 @@ resource "aws_security_group" "internal_http_in" {
 }
 
 # Allow internal SSH connections from private subnets
-resource aws_security_group "internal_ssh_in" {
-  name          = "internal_ssh_in"
-  description   = "Allow SSH traffic from private subnets"
+resource "aws_security_group" "internal_ssh_in" {
+  name        = "internal_ssh_in"
+  description = "Allow SSH traffic from private subnets"
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "TCP"
+    from_port = 22
+    to_port   = 22
+    protocol  = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
-      ]
+    ]
   }
-  
-  vpc_id        = var.vpc_id
+
+  vpc_id = var.vpc_id
 
   tags = {
-    Name = "internal-ssh-in"
+    Name      = "internal-ssh-in"
     Terraform = "true"
   }
 
@@ -55,22 +55,22 @@ resource aws_security_group "internal_ssh_in" {
   }
 }
 
-resource aws_security_group "internal_ssh_out" {
-  name          = "internal_ssh_out"
-  description   = "Allow SSH traffic from private subnets"
+resource "aws_security_group" "internal_ssh_out" {
+  name        = "internal_ssh_out"
+  description = "Allow SSH traffic from private subnets"
   egress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "TCP"
+    from_port = 22
+    to_port   = 22
+    protocol  = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
-      ]
+    ]
   }
-  vpc_id        = var.vpc_id
+  vpc_id = var.vpc_id
 
   tags = {
-    Name = "internal-ssh-out"
+    Name      = "internal-ssh-out"
     Terraform = "true"
   }
 

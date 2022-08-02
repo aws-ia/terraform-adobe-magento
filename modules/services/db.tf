@@ -58,20 +58,20 @@ resource "aws_db_instance" "magento_db" {
 
 
 resource "aws_rds_cluster" "magento_db_aurora" {
-  count                        = var.use_aurora ? 1 : 0
-  cluster_identifier           = "magento-db"
-  engine                       = "aurora-mysql"
-  engine_version               = "8.0.mysql_aurora.3.01.0"
-  allow_major_version_upgrade  = false
-  database_name                = var.magento_db_name
-  master_username              = var.magento_db_username
-  master_password              = var.magento_database_password
-  vpc_security_group_ids       = [aws_security_group.allow_rds_in.id]
-  skip_final_snapshot          = var.skip_rds_snapshot_on_destroy
-  final_snapshot_identifier    = "magento-final-snapshot-${random_string.db_suffix.result}"
-  db_subnet_group_name         = "magento-rds"
-  depends_on                   = [aws_db_subnet_group.magento_rds]
-  storage_encrypted            = true
+  count                       = var.use_aurora ? 1 : 0
+  cluster_identifier          = "magento-db"
+  engine                      = "aurora-mysql"
+  engine_version              = "8.0.mysql_aurora.3.01.0"
+  allow_major_version_upgrade = false
+  database_name               = var.magento_db_name
+  master_username             = var.magento_db_username
+  master_password             = var.magento_database_password
+  vpc_security_group_ids      = [aws_security_group.allow_rds_in.id]
+  skip_final_snapshot         = var.skip_rds_snapshot_on_destroy
+  final_snapshot_identifier   = "magento-final-snapshot-${random_string.db_suffix.result}"
+  db_subnet_group_name        = "magento-rds"
+  depends_on                  = [aws_db_subnet_group.magento_rds]
+  storage_encrypted           = true
 
   timeouts {
     create = "60m"
@@ -88,15 +88,15 @@ resource "aws_rds_cluster" "magento_db_aurora" {
 }
 
 resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
-    count                        = var.use_aurora ? 1 : 0
-    identifier                   = "magento-db-${count.index}"
-    cluster_identifier           = "${aws_rds_cluster.magento_db_aurora[0].id}"
-    engine                       = "aurora-mysql"
-    engine_version               = "8.0.mysql_aurora.3.01.0"
-    instance_class               = var.ec2_instance_type_rds
-    db_subnet_group_name         = "magento-rds"
-    publicly_accessible          = false
-    performance_insights_enabled = var.magento_db_performance_insights_enabled
+  count                        = var.use_aurora ? 1 : 0
+  identifier                   = "magento-db-${count.index}"
+  cluster_identifier           = aws_rds_cluster.magento_db_aurora[0].id
+  engine                       = "aurora-mysql"
+  engine_version               = "8.0.mysql_aurora.3.01.0"
+  instance_class               = var.ec2_instance_type_rds
+  db_subnet_group_name         = "magento-rds"
+  publicly_accessible          = false
+  performance_insights_enabled = var.magento_db_performance_insights_enabled
 
   timeouts {
     create = "60m"
@@ -106,7 +106,7 @@ resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
     Name      = "magento-aurora-database"
     Terraform = true
   }
-  
+
   lifecycle {
     create_before_destroy = true
   }

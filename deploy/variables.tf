@@ -89,7 +89,7 @@ variable "vpc_cidr" {
 variable "management_addresses" {
   description = "Whitelisted IP addresses for access to the bastion host."
   type        = list(string)
-  default     = ["10.0.0.0/32",]
+  default     = ["10.0.0.0/32", ]
 }
 
 #######################
