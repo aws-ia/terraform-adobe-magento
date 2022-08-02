@@ -51,7 +51,7 @@ resource "aws_instance" "varnish_instance" {
 
   metadata_options {
     http_tokens = "required"
-  } 
+  }
 }
 
 resource "random_pet" "ami" {

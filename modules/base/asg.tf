@@ -47,5 +47,5 @@ resource "aws_launch_configuration" "bastion_launch_cfg" {
 
   metadata_options {
     http_tokens = "required"
-  } 
+  }
 }

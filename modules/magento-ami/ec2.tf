@@ -62,7 +62,7 @@ resource "aws_instance" "magento_instance" {
 
   metadata_options {
     http_tokens = "required"
-  } 
+  }
 }
 
 resource "random_pet" "ami" {
