@@ -1,4 +1,5 @@
-resource "aws_cloudwatch_log_group" "magento-exception-log" {
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
+resource "aws_cloudwatch_log_group" "magento_exception_log" {
   name              = "/magento-exception-log"
   retention_in_days = "90"
 
@@ -8,7 +9,8 @@ resource "aws_cloudwatch_log_group" "magento-exception-log" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "magento-system-log" {
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
+resource "aws_cloudwatch_log_group" "magento_system_log" {
   name              = "/magento-system-log"
   retention_in_days = "90"
 
@@ -18,7 +20,8 @@ resource "aws_cloudwatch_log_group" "magento-system-log" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "magento-debug-log" {
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
+resource "aws_cloudwatch_log_group" "magento_debug_log" {
   name              = "/magento-debug-log"
   retention_in_days = "90"
 
@@ -28,7 +31,8 @@ resource "aws_cloudwatch_log_group" "magento-debug-log" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "magento-cron-log" {
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
+resource "aws_cloudwatch_log_group" "magento_cron_log" {
   name              = "/magento-cron-log"
   retention_in_days = "90"
 

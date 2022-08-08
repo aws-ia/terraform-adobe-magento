@@ -11,7 +11,7 @@ resource "aws_iam_role" "magento_host_role" {
 
 resource "aws_iam_role_policy" "magento_instance_role_policy" {
   name   = "MagentoHostPolicy"
-  policy = templatefile("${path.module}/iam_policies/magento-iam-policy.json", { "project" = var.project, "bucket" = "${aws_s3_bucket.magento_files.bucket}" })
+  policy = templatefile("${path.module}/iam_policies/magento-iam-policy.json", { "project" = var.project, "bucket" = aws_s3_bucket.magento_files.bucket })
   role   = aws_iam_role.magento_host_role.id
 }
 

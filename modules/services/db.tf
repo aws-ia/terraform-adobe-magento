@@ -50,13 +50,11 @@ resource "aws_db_instance" "magento_db" {
   }
 
   lifecycle {
-    ignore_changes = [
-      latest_restorable_time
-    ]
+    ignore_changes = []
   }
 }
 
-
+#tfsec:ignore:aws-rds-encrypt-cluster-storage-data
 resource "aws_rds_cluster" "magento_db_aurora" {
   count                       = var.use_aurora ? 1 : 0
   cluster_identifier          = "magento-db"
@@ -72,6 +70,7 @@ resource "aws_rds_cluster" "magento_db_aurora" {
   db_subnet_group_name        = "magento-rds"
   depends_on                  = [aws_db_subnet_group.magento_rds]
   storage_encrypted           = true
+  backup_retention_period     = 5
 
   timeouts {
     create = "60m"
@@ -87,6 +86,7 @@ resource "aws_rds_cluster" "magento_db_aurora" {
   }
 }
 
+#tfsec:ignore:aws-rds-enable-performance-insights-encryption
 resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
   count                        = var.use_aurora ? 1 : 0
   identifier                   = "magento-db-${count.index}"
@@ -96,7 +96,7 @@ resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
   instance_class               = var.ec2_instance_type_rds
   db_subnet_group_name         = "magento-rds"
   publicly_accessible          = false
-  performance_insights_enabled = false
+  performance_insights_enabled = true
 
   timeouts {
     create = "60m"

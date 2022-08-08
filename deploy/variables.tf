@@ -46,6 +46,7 @@ variable "ssh_username" {
 }
 
 variable "base_ami_os" {
+  type        = string
   description = "Amazon Linux 2 (amazon_linux_2) or Debian 10 (debian_10)"
   default     = "debian_10"
 }

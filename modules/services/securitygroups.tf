@@ -6,18 +6,20 @@ resource "aws_security_group" "allow_redis_in" {
   description = "Allow redis connections from private subnet"
   vpc_id      = var.vpc_id
   ingress {
-    from_port = 6379
-    to_port   = 6379
-    protocol  = "TCP"
+    description = "Allow redis connections from private subnet"
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
     ]
   }
   egress {
-    from_port = 6379
-    to_port   = 6379
-    protocol  = "TCP"
+    description = "Allow redis connections from private subnet"
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
@@ -35,18 +37,20 @@ resource "aws_security_group" "allow_awsmq_in" {
   description = "Allow rabbitmq connections from private subnet"
   vpc_id      = var.vpc_id
   ingress {
-    from_port = 5671
-    to_port   = 5671
-    protocol  = "TCP"
+    description = "Allow rabbitmq connections from private subnet"
+    from_port   = 5671
+    to_port     = 5671
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
     ]
   }
   egress {
-    from_port = 5671
-    to_port   = 5671
-    protocol  = "TCP"
+    description = "Allow rabbitmq connections from private subnet"
+    from_port   = 5671
+    to_port     = 5671
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
@@ -64,9 +68,10 @@ resource "aws_security_group" "allow_rds_in" {
   description = "Allow incoming MySQL traffic from private subnet and bastion host"
   vpc_id      = var.vpc_id
   ingress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
+    description = "Allow incoming MySQL traffic from private subnet and bastion host"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block,
@@ -75,9 +80,10 @@ resource "aws_security_group" "allow_rds_in" {
     ]
   }
   egress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
+    description = "Allow incoming MySQL traffic from private subnet and bastion host"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block,
@@ -100,9 +106,10 @@ resource "aws_security_group" "internal_es_http_in" {
   name        = "internal_es_http_in"
   description = "Allow Elasticsearch HTTP traffic from private and public subnets"
   ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "TCP"
+    description = "Allow Elasticsearch HTTP traffic from private and public subnets"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block,

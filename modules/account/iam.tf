@@ -35,6 +35,7 @@ resource "aws_iam_role_policy_attachment" "policy_to_backup_role" {
 ##
 # SES SMTP User
 ##
+#tfsec:ignore:aws-iam-no-user-attached-policies
 resource "aws_iam_user" "smtp_user" {
   name = "ses-smtp-user"
 }

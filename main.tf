@@ -1,5 +1,9 @@
 terraform {
   required_version = ">= 1.0.0"
+  required_providers {
+    awscc = "~> 0.8.0"
+    aws   = "~> 3.66.0"
+  }
 }
 
 # Create the basis for base module
@@ -107,8 +111,8 @@ module "services" {
 }
 
 # Create Magento AMI
-module "magento-ami" {
-  source                 = "./modules/magento-ami"
+module "magento_ami" {
+  source                 = "./modules/magento_ami"
   base_ami_id            = data.aws_ami.selected.id
   ssh_key_name           = var.ssh_key_name
   ssh_username           = var.ssh_username
@@ -126,8 +130,8 @@ module "magento-ami" {
 }
 
 # Create Varnish AMI
-module "varnish-ami" {
-  source               = "./modules/varnish-ami"
+module "varnish_ami" {
+  source               = "./modules/varnish_ami"
   base_ami_id          = data.aws_ami.selected.id
   ssh_key_name         = var.ssh_key_name
   ssh_username         = var.ssh_username
@@ -173,14 +177,14 @@ module "magento" {
   )
 
   # AMIs
-  magento_ami     = module.magento-ami.magento_ami_id
-  varnish_ami     = module.varnish-ami.varnish_ami_id
+  magento_ami     = module.magento_ami.magento_ami_id
+  varnish_ami     = module.varnish_ami.varnish_ami_id
   cert_arn        = var.cert
   nat_gateway_ip1 = module.base.nat_gateway_ip1
   nat_gateway_ip2 = module.base.nat_gateway_ip2
 
   depends_on = [
-    module.magento-ami,
-    module.varnish-ami
+    module.magento_ami,
+    module.varnish_ami
   ]
 }

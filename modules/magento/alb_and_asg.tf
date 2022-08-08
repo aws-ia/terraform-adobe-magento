@@ -2,18 +2,17 @@
 # | Load balancers |
 # ------------------
 
-resource "random_string" "rnd_string" {
-  length  = 6
-  special = false
-  upper   = false
-}
-
+#tfsec:ignore:aws-s3-block-public-acls tfsec:ignore:aws-s3-block-public-policy tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-ignore-public-acls tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-specify-public-access-block tfsec:ignore:aws-s3-specify-public-access-block
 resource "aws_s3_bucket" "lb_logs" {
-  bucket = "${var.project}-lb-logs-bucket-${random_string.rnd_string.result}"
+  bucket = "${var.project}-lb-logs-bucket"
   acl    = "private"
 
+  versioning {
+    enabled = true
+  }
+
   tags = {
-    Name      = "${var.project}-lb-logs-bucket-${random_string.rnd_string.result}"
+    Name      = "${var.project}-lb-logs-bucket"
     Terraform = true
   }
 }
@@ -23,6 +22,7 @@ resource "aws_s3_bucket" "lb_logs" {
 # EXTERNAL Load Balancer
 ##
 
+#tfsec:ignore:aws-elb-alb-not-public
 resource "aws_alb" "alb_external" {
   name            = "alb-external"
   internal        = false
@@ -38,6 +38,8 @@ resource "aws_alb" "alb_external" {
     prefix  = "lb"
     enabled = var.lb_access_logs_enabled
   }
+
+  drop_invalid_header_fields = true
 
   tags = {
     Name      = "alb-external"
@@ -68,6 +70,7 @@ resource "aws_alb_target_group" "alb_tg_external" {
   }
 }
 
+#tfsec:ignore:aws-elb-http-not-used
 resource "aws_alb_listener" "alb_listener_http" {
   load_balancer_arn = aws_alb.alb_external.arn
   port              = "80"
@@ -92,7 +95,7 @@ resource "aws_alb_listener" "alb_listener_https" {
   load_balancer_arn = aws_alb.alb_external.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn   = var.cert_arn
 
   default_action {
@@ -126,6 +129,8 @@ resource "aws_alb" "alb_internal" {
   # Deletion production should be true in production environment if we don't automatically generate varnish VCL
   enable_deletion_protection = false
 
+  drop_invalid_header_fields = true
+
   tags = {
     Name        = "alb-internal"
     Description = "Load balancer for incoming internal HTTP traffic"
@@ -157,6 +162,7 @@ resource "aws_alb_target_group" "alb_tg_internal" {
   }
 }
 
+#tfsec:ignore:aws-elb-http-not-used
 resource "aws_alb_listener" "alb_internal_listener_http" {
   load_balancer_arn = aws_alb.alb_internal.arn
   port              = "80"
@@ -268,10 +274,10 @@ resource "aws_cloudwatch_metric_alarm" "cloudwatch_magento_cpu_high" {
   threshold           = "90"
   alarm_description   = "Magento CPU over 90%"
   alarm_actions = [
-    "${aws_autoscaling_policy.autoscaling_magento_up.arn}"
+    aws_autoscaling_policy.autoscaling_magento_up.arn
   ]
   dimensions = {
-    AutoScalingGroupName = "${aws_autoscaling_group.magento.name}"
+    AutoScalingGroupName = aws_autoscaling_group.magento.name
   }
 }
 
@@ -286,10 +292,10 @@ resource "aws_cloudwatch_metric_alarm" "cloudwatch_magento_cpu_low" {
   threshold           = "70"
   alarm_description   = "Magento CPU under 70%"
   alarm_actions = [
-    "${aws_autoscaling_policy.autoscaling_magento_down.arn}"
+    aws_autoscaling_policy.autoscaling_magento_down.arn
   ]
   dimensions = {
-    AutoScalingGroupName = "${aws_autoscaling_group.magento.name}"
+    AutoScalingGroupName = aws_autoscaling_group.magento.name
   }
 }
 
@@ -331,10 +337,12 @@ data "template_file" "magento_userdata" {
 #!/bin/bash
 sleep $[ ( $RANDOM % 10 )  + 1 ]s
 sudo -u admin crontab -r
+sudo -u ec2-user crontab -r
 sudo su - magento -c "/opt/ec2_install/scripts/magento-setup.sh"
   EOF
 }
 
+#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
 resource "aws_launch_template" "magento_launch_template" {
   name_prefix   = "magento-web-"
   image_id      = var.magento_ami
@@ -384,6 +392,7 @@ data "template_file" "varnish_userdata" {
   template = <<EOF
 #!/bin/bash
 sudo -u admin crontab -r
+sudo -u ec2-user crontab -r
 sed -i "s/DNS_RESOLVER/${cidrhost(var.vpc_cidr, "2")}/g" /etc/nginx/conf.d/varnish.conf
 sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/nginx/conf.d/varnish.conf
 sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/varnish/backends.vcl
@@ -392,6 +401,7 @@ systemctl restart varnish
   EOF
 }
 
+#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
 resource "aws_launch_template" "varnish_launch_template" {
   name_prefix   = "varnish-"
   image_id      = var.varnish_ami

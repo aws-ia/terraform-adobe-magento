@@ -5,9 +5,15 @@ data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
 
+#tfsec:ignore:aws-elastic-search-enable-domain-logging
 resource "aws_elasticsearch_domain" "es" {
   domain_name           = var.elasticsearch_domain
   elasticsearch_version = var.es_version
+
+  domain_endpoint_options {
+    enforce_https       = true
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+  }
 
   cluster_config {
     instance_count         = 2

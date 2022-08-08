@@ -7,9 +7,10 @@ resource "aws_security_group" "internal_http_in" {
   name        = "internal_http_in"
   description = "Allow HTTP traffic from private and public subnets"
   ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "TCP"
+    description = "Allow HTTP traffic from private and public subnets"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.public_subnet.cidr_block,
@@ -34,9 +35,10 @@ resource "aws_security_group" "internal_ssh_in" {
   name        = "internal_ssh_in"
   description = "Allow SSH traffic from private subnets"
   ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "TCP"
+    description = "Allow SSH traffic from private subnets"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block
@@ -59,9 +61,10 @@ resource "aws_security_group" "internal_ssh_out" {
   name        = "internal_ssh_out"
   description = "Allow SSH traffic from private subnets"
   egress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "TCP"
+    description = "Allow SSH traffic from private subnets"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
     cidr_blocks = [
       data.aws_subnet.private_subnet.cidr_block,
       data.aws_subnet.private2_subnet.cidr_block

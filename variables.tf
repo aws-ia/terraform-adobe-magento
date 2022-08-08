@@ -14,46 +14,57 @@ variable "domain_name" {
 }
 
 variable "cert" {
-  type    = string
-  default = false
+  type        = string
+  default     = false
+  description = "TLS certificate"
 }
 
 variable "profile" {
-  type = string
+  type        = string
+  description = "AWS profile"
 }
 
 variable "ssh_key_name" {
-  type = string
+  type        = string
+  description = "SSH key name"
 }
 
 variable "ssh_username" {
-  type = string
+  type        = string
+  description = "SSH username"
 }
 
 variable "ssh_key_pair_name" {
-  type = string
+  type        = string
+  description = "SSH keypair name"
 }
 
 variable "magento_admin_firstname" {
+  type        = string
   description = "Firstname for Magento admin."
 }
 
 variable "magento_admin_lastname" {
+  type        = string
   description = "Lastname for Magento admin."
 }
 
 variable "magento_admin_username" {
+  type        = string
   description = "Username for Magento admin."
 }
 variable "magento_admin_password" {
+  type        = string
   description = "Password for Magento admin."
 }
 
 variable "magento_database_password" {
+  type        = string
   description = "Password for Magento DB."
 }
 
 variable "magento_admin_email" {
+  type        = string
   description = "Email address for Magento admin."
 }
 
@@ -93,6 +104,7 @@ data "aws_ami" "selected" {
   }
 }
 
+/*
 variable "base_ami_ids" {
   description = "Base AMI for bastion host and Magento EC2 instances. Amazon Linux 2 or Debian 10."
   type        = map(string)
@@ -101,27 +113,32 @@ variable "base_ami_ids" {
     "debian_10"      = "ami-07d02ee1eeb0c996c"
   }
 }
+*/
 
 variable "base_ami_os" {
-  type = string
+  type        = string
+  description = "OS for base AMI"
 }
 
 #######
 # AZs #
 #######
 variable "region" {
-  type    = string
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
+  description = "AWS region"
 }
 
 variable "az1" {
-  type    = string
-  default = "us-east-1a"
+  type        = string
+  default     = "us-east-1a"
+  description = "AZ 1"
 }
 
 variable "az2" {
-  type    = string
-  default = "us-east-1b"
+  type        = string
+  default     = "us-east-1b"
+  description = "AZ 2"
 }
 
 
@@ -129,7 +146,8 @@ variable "az2" {
 #  Networking and External IP addresses  # 
 ##########################################
 variable "create_vpc" {
-  type = bool
+  type        = bool
+  description = "Create VPC or not"
 }
 
 variable "vpc_cidr" {
@@ -167,11 +185,15 @@ variable "lb_access_logs_enabled" {
 ##################
 
 variable "magento_db_backup_retention_period" {
-  default = 3
+  type        = number
+  default     = 3
+  description = "Backup retention period for DB"
 }
 
 variable "magento_db_allocated_storage" {
-  default = 60
+  type        = number
+  default     = 60
+  description = "DB allocated storage space"
 }
 
 variable "skip_rds_snapshot_on_destroy" {
@@ -181,7 +203,9 @@ variable "skip_rds_snapshot_on_destroy" {
 }
 
 variable "magento_db_performance_insights_enabled" {
-  default = true
+  type        = bool
+  default     = true
+  description = "DB performance insights"
 }
 
 ##################
@@ -207,30 +231,37 @@ variable "rabbitmq_username" {
 #  Only applied if create_vpc is set to "true" #
 ################################################
 variable "vpc_id" {
-  type = string
+  type        = string
+  description = "VPC ID"
 }
 variable "vpc_public_subnet_id" {
-  type = string
+  type        = string
+  description = "VPC public subnet 1"
 }
 
 variable "vpc_public2_subnet_id" {
-  type = string
+  type        = string
+  description = "VPC public subnet 1"
 }
 
 variable "vpc_private_subnet_id" {
-  type = string
+  type        = string
+  description = "VPC private subnet 1"
 }
 
 variable "vpc_private2_subnet_id" {
-  type = string
+  type        = string
+  description = "VPC private subnet 1"
 }
 
 variable "vpc_rds_subnet_id" {
-  type = string
+  type        = string
+  description = "RDS private subnet 1"
 }
 
 variable "vpc_rds_subnet2_id" {
-  type = string
+  type        = string
+  description = "RDS private subnet 2"
 }
 
 variable "use_aurora" {

@@ -2,11 +2,13 @@
 # Common        #
 #################
 variable "magento_ami" {
-  type = string
+  type        = string
+  description = "magento_ami"
 }
 
 variable "varnish_ami" {
-  type = string
+  type        = string
+  description = "varnish_ami"
 }
 
 variable "project" {
@@ -15,7 +17,8 @@ variable "project" {
 }
 
 variable "cert_arn" {
-  type = string
+  type        = string
+  description = "cert_arn"
 }
 
 variable "ssh_key_name" {
@@ -37,35 +40,43 @@ variable "ssh_key_pair_name" {
 #  Networking      #
 ####################
 variable "vpc_id" {
-  type = string
+  type        = string
+  description = "vpc_id"
 }
 
 variable "vpc_cidr" {
-  type = string
+  type        = string
+  description = "vpc_cidr"
 }
 
 variable "public_subnet_id" {
-  type = string
+  type        = string
+  description = "public_subnet_id"
 }
 
 variable "private_subnet_id" {
-  type = string
+  type        = string
+  description = "private_subnet_id"
 }
 
 variable "public2_subnet_id" {
-  type = string
+  type        = string
+  description = "public2_subnet_id"
 }
 
 variable "private2_subnet_id" {
-  type = string
+  type        = string
+  description = "private2_subnet_id"
 }
 
 variable "nat_gateway_ip1" {
-  type = string
+  type        = string
+  description = "nat_gateway_ip1"
 }
 
 variable "nat_gateway_ip2" {
-  type = string
+  type        = string
+  description = "nat_gateway_ip2"
 }
 
 ####################
@@ -87,7 +98,8 @@ variable "sg_allow_all_out_id" {
 }
 
 variable "external_lb_sg_ids" {
-  type = list(string)
+  type        = list(string)
+  description = "external_lb_sg_ids"
 }
 
 
@@ -105,6 +117,7 @@ variable "lb_access_logs_enabled" {
 # Cloudfront       #
 ####################
 variable "acl_id" {
+  type        = number
   description = "Optional ACL to use in front of Cloudfront distribution"
   default     = null
 }
@@ -113,38 +126,54 @@ variable "acl_id" {
 # Magento autoscaling group min/max/desired values #
 ####################################################
 variable "magento_autoscale_min" {
-  default = "1"
+  type        = string
+  default     = "1"
+  description = "magento_autoscale_min"
 }
 variable "magento_autoscale_max" {
-  default = "8"
+  type        = string
+  default     = "8"
+  description = "magento_autoscale_max"
 }
 variable "magento_autoscale_desired" {
-  default = "1"
+  type        = string
+  default     = "1"
+  description = "magento_autoscale_desired"
 }
 
 #############################
 # Magento EC2 Instance Size #
 #############################
 variable "ec2_instance_type_magento" {
-  default = "m6i.large"
+  type        = string
+  default     = "m6i.large"
+  description = "ec2_instance_type_magento"
 }
 
 ####################################################
 # Varnish autoscaling group min/max/desired values #
 ####################################################
 variable "varnish_autoscale_min" {
-  default = "1"
+  type        = string
+  default     = "1"
+  description = "varnish_autoscale_min"
 }
 variable "varnish_autoscale_max" {
-  default = "1"
+  type        = string
+  default     = "1"
+  description = "varnish_autoscale_max"
 }
 variable "varnish_autoscale_desired" {
-  default = "1"
+  type        = string
+  default     = "1"
+  description = "varnish_autoscale_desired"
 }
 
 #############################
 # Varnish EC2 Instance Size #
 #############################
 variable "ec2_instance_type_varnish" {
-  default = "m6i.large"
+  type        = string
+  default     = "m6i.large"
+  description = "ec2_instance_type_varnish"
 }

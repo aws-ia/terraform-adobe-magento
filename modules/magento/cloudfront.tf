@@ -1,4 +1,5 @@
 # Cloudfront distribution for main s3 site.
+#tfsec:ignore:aws-cloudfront-enable-logging
 resource "aws_cloudfront_distribution" "alb_distribution" {
   origin {
     domain_name = aws_alb.alb_external.dns_name
@@ -44,6 +45,7 @@ resource "aws_cloudfront_distribution" "alb_distribution" {
 
   viewer_certificate {
     cloudfront_default_certificate = true
+    minimum_protocol_version       = "TLSv1.2_2021"
   }
 
   tags = {
