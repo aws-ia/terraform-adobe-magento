@@ -27,6 +27,8 @@ else
     sudo chmod 600 ~magento/.ssh/authorized_keys
 fi
 
+sudo chown -R magento. /mnt/efs/magento
+
 MAGENTO_DB_HOST=$(grep 'magento_database_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_DB_PASS=$(grep 'magento_database_password:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
 MAGENTO_REDIS_CACHE_HOST=$(grep 'magento_cache_host:' ${VARIABLE_TEMP_FILE} | tail -n1 | awk '{ print $2}')
