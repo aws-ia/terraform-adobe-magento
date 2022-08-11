@@ -46,6 +46,7 @@ variable "ssh_username" {
 }
 
 variable "base_ami_os" {
+  type        = string
   description = "Amazon Linux 2 (amazon_linux_2) or Debian 10 (debian_10)"
   default     = "debian_10"
 }
@@ -89,7 +90,7 @@ variable "vpc_cidr" {
 variable "management_addresses" {
   description = "Whitelisted IP addresses for access to the bastion host."
   type        = list(string)
-  default     = ["10.0.0.0/32",]
+  default     = ["10.0.0.0/32", ]
 }
 
 #######################
@@ -140,6 +141,12 @@ variable "magento_admin_email" {
 #############
 # Database  #
 #############
+variable "use_aurora" {
+  type        = bool
+  description = "Use Aurora or RDS"
+  default     = true
+}
+
 variable "magento_database_password" {
   type        = string
   description = "Password for Magento DB."

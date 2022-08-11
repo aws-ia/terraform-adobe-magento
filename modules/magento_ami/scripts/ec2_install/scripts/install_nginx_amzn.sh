@@ -10,7 +10,7 @@ sudo systemctl enable nginx
 
 sudo mv $BASEDIR/configs/magento.conf /etc/nginx/conf.d/
 sudo chown root. /etc/nginx/conf.d/magento.conf
-sudo sed -i 's/\/var\/run\/php\/php7.4-fpm.sock/\/var\/run\/php7.4-fpm.sock/g' /etc/nginx/conf.d/magento.conf
+sudo sed -i 's/\/var\/run\/php\/php8.1-fpm.sock/\/var\/run\/php8.1-fpm.sock/g' /etc/nginx/conf.d/magento.conf
 sudo sed -i "s/REGION/$REGION/g" /etc/nginx/conf.d/magento.conf
 
 sudo usermod -aG magento nginx

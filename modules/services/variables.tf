@@ -30,32 +30,38 @@ variable "project" {
 #  Networking      #
 ####################
 variable "vpc_id" {
-  type = string
+  type        = string
+  description = "vpc_id"
 }
 
 variable "private_subnet_id" {
-  type = string
+  type        = string
+  description = "private_subnet_id"
 }
 
 variable "private2_subnet_id" {
-  type = string
+  type        = string
+  description = "private2_subnet_id"
 }
 
 variable "public_subnet_id" {
-  type = string
+  type        = string
+  description = "public_subnet_id"
 }
 
 variable "public2_subnet_id" {
-  type = string
+  type        = string
+  description = "public2_subnet_id"
 }
 
-
 variable "rds_subnet_id" {
-  type = string
+  type        = string
+  description = "rds_subnet_id"
 }
 
 variable "rds_subnet2_id" {
-  type = string
+  type        = string
+  description = "rds_subnet2_id"
 }
 
 #variable "bastion_instance_id" {
@@ -86,23 +92,27 @@ variable "sg_restricted_https_in_id" {
 }
 
 variable "sg_efs_private_in_id" {
-  type = string
+  description = "Security group ID for allowing EFS"
+  type        = string
 }
 
 ####################
 #  RDS             #
 ####################
 variable "skip_rds_snapshot_on_destroy" {
+  type        = bool
   description = "Skip the creation of a snapshot when db resource is destroyed?"
   default     = true
 }
 
 variable "magento_db_backup_retention_period" {
-  type = string
+  description = "magento_db_backup_retention_period"
+  type        = string
 }
 
 variable "magento_db_allocated_storage" {
-  type = string
+  description = "magento_db_allocated_storage"
+  type        = string
 }
 
 variable "magento_db_performance_insights_enabled" {
@@ -142,8 +152,9 @@ variable "redis_engine_version" {
 # RabbitMQ            #
 #######################
 variable "mq_engine_version" {
-  type    = string
-  default = "3.8.22"
+  description = "mq_engine_version"
+  type        = string
+  default     = "3.8.22"
 }
 
 variable "rabbitmq_username" {
@@ -155,17 +166,20 @@ variable "rabbitmq_username" {
 # ElasticSearch       #
 #######################
 variable "elasticsearch_domain" {
-  type = string
+  description = "elasticsearch_domain"
+  type        = string
 }
 
 variable "es_version" {
-  default = "7.4"
-  type    = string
+  description = "es_version"
+  default     = "7.4"
+  type        = string
 }
 
 variable "es_instance_type" {
-  default = "m5.large.elasticsearch"
-  type    = string
+  description = "es instance type"
+  default     = "m5.large.elasticsearch"
+  type        = string
 }
 
 ########
@@ -180,17 +194,31 @@ variable "magento_admin_email" {
 # EC2 instance types used within the module            #
 ########################################################
 variable "ec2_instance_type_redis_cache" {
-  default = "cache.m5.large"
+  description = "ec2_instance_type_redis_cache"
+  type        = string
+  default     = "cache.m5.large"
 }
 
 variable "ec2_instance_type_redis_session" {
-  default = "cache.m5.large"
+  description = "ec2_instance_type_redis_session"
+  type        = string
+  default     = "cache.m5.large"
 }
 
 variable "ec2_instance_type_rds" {
-  default = "db.r5.2xlarge"
+  description = "ec2_instance_type_rds"
+  type        = string
+  default     = "db.r5.2xlarge"
 }
 
 variable "mq_instance_type" {
-  default = "mq.m5.large"
+  description = "mq_instance_type"
+  type        = string
+  default     = "mq.m5.large"
+}
+
+variable "use_aurora" {
+  type        = bool
+  description = "Use Aurora or RDS"
+  default     = true
 }

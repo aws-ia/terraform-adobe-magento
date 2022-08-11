@@ -30,11 +30,13 @@ variable "sg_allow_all_out_id" {
 }
 
 variable "public_subnet_id" {
-  type = string
+  description = "public subnet ID"
+  type        = string
 }
 
 variable "vpc_id" {
-  type = string
+  description = "VPC ID"
+  type        = string
 }
 
 variable "management_addresses" {

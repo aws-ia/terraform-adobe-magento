@@ -19,7 +19,8 @@ resource "aws_elasticache_parameter_group" "magento_required" {
 }
 
 # Redis instance for backend caching
-resource "aws_elasticache_replication_group" "redis-backend-cache" {
+#tfsec:ignore:aws-elasticache-enable-in-transit-encryption
+resource "aws_elasticache_replication_group" "redis_backend_cache" {
   automatic_failover_enabled    = true
   availability_zones            = [var.az1, var.az2]
   multi_az_enabled              = true
@@ -27,6 +28,7 @@ resource "aws_elasticache_replication_group" "redis-backend-cache" {
   engine_version                = var.redis_engine_version
   replication_group_id          = "redis-backend-cache"
   replication_group_description = "Redis Replication Group"
+  transit_encryption_enabled    = false
   node_type                     = var.ec2_instance_type_redis_cache
   number_cache_clusters         = 2
   parameter_group_name          = aws_elasticache_parameter_group.magento_required.name
@@ -40,13 +42,14 @@ resource "aws_elasticache_replication_group" "redis-backend-cache" {
   }
 
   tags = {
-    Name      = "magento-redis-backend-cache"
+    Name      = "magento_redis_backend_cache"
     Terraform = true
   }
 }
 
 # Redis instance for sessions
-resource "aws_elasticache_replication_group" "redis-sessions" {
+#tfsec:ignore:aws-elasticache-enable-in-transit-encryption
+resource "aws_elasticache_replication_group" "redis_sessions" {
   automatic_failover_enabled    = true
   availability_zones            = [var.az1, var.az2]
   multi_az_enabled              = true
@@ -54,6 +57,7 @@ resource "aws_elasticache_replication_group" "redis-sessions" {
   engine_version                = var.redis_engine_version
   replication_group_id          = "redis-sessions"
   replication_group_description = "Redis Replication Group"
+  transit_encryption_enabled    = false
   node_type                     = var.ec2_instance_type_redis_session
   number_cache_clusters         = 2
   parameter_group_name          = aws_elasticache_parameter_group.magento_required.name
@@ -67,7 +71,7 @@ resource "aws_elasticache_replication_group" "redis-sessions" {
   }
 
   tags = {
-    Name      = "magento-redis-sessions"
+    Name      = "magento_redis_sessions"
     Terraform = true
   }
 }
