@@ -7,7 +7,7 @@ resource "aws_security_group" "management_ssh_in" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-ingress-sgr
   }
   vpc_id = var.vpc_id
 

@@ -29,14 +29,14 @@ resource "aws_autoscaling_group" "bastion" {
   }
 }
 
-#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
+#tfsec:ignore:aws-autoscaling-enforce-http-token-imds
 resource "aws_launch_configuration" "bastion_launch_cfg" {
   name_prefix                 = "bastion-host-"
   image_id                    = var.base_ami_id
   security_groups             = [aws_security_group.management_bastion_ssh_in.id, aws_security_group.allow_all_out.id]
   instance_type               = var.ec2_instance_type_bastion
   iam_instance_profile        = data.aws_iam_instance_profile.bastion_host_profile.name
-  associate_public_ip_address = true #tfsec:ignore:aws-ec2-no-public-ip
+  associate_public_ip_address = true #tfsec:ignore:aws-autoscaling-no-public-ip
   key_name                    = var.ssh_key_pair_name
   root_block_device {
     encrypted = true

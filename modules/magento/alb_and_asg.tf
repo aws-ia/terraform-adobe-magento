@@ -342,7 +342,7 @@ sudo su - magento -c "/opt/ec2_install/scripts/magento-setup.sh"
   EOF
 }
 
-#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
+#tfsec:ignore:aws-autoscaling-enforce-http-token-imds
 resource "aws_launch_template" "magento_launch_template" {
   name_prefix   = "magento-web-"
   image_id      = var.magento_ami
@@ -401,7 +401,7 @@ systemctl restart varnish
   EOF
 }
 
-#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
+#tfsec:ignore:aws-autoscaling-enforce-http-token-imds
 resource "aws_launch_template" "varnish_launch_template" {
   name_prefix   = "varnish-"
   image_id      = var.varnish_ami
