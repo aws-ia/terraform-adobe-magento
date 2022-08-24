@@ -1,7 +1,9 @@
 # These variables have no default values and must be supplied when
 # consuming this module.
 
+
 variable "project" {
+  # tflint-ignore: terraform_unused_declarations
   description = "Project identifier, used in e.g. S3 bucket naming"
   type        = string
 }
@@ -43,18 +45,26 @@ variable "ec2_instance_type_bastion" {
 }
 
 variable "domain_name" {
+  # tflint-ignore: terraform_unused_declarations
   type        = string
   description = "Add domain that is used e.g. bastion host connections."
 }
 
+
 variable "bastion_autoscale_min" {
-  default = "1"
+  type        = number
+  default     = "1"
+  description = "Bastion minimum autoscale"
 }
 variable "bastion_autoscale_max" {
-  default = "1"
+  type        = number
+  default     = "1"
+  description = "Bastion maximum autoscale"
 }
 variable "bastion_autoscale_desired" {
-  default = "1"
+  type        = number
+  default     = "1"
+  description = "Bastion desired autoscale"
 }
 
 ################################################
@@ -62,38 +72,45 @@ variable "bastion_autoscale_desired" {
 #  Only applied if create_vpc is set to "true" #
 ################################################
 variable "vpc_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC ID"
 }
 
 variable "vpc_public_subnet_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC public subnet ID 1"
 }
 
 variable "vpc_public2_subnet_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC public subnet ID 2"
 }
 
 variable "vpc_private_subnet_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC private subnet ID 1"
 }
 
 variable "vpc_private2_subnet_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC private subnet ID 2"
 }
 
 variable "vpc_rds_subnet_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC RDS private subnet ID 1"
 }
 
 variable "vpc_rds_subnet2_id" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "VPC RDS private subnet ID 2"
 }
 
 variable "ssh_key_pair_name" {

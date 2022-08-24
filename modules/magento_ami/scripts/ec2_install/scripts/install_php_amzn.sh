@@ -16,7 +16,7 @@ sudo yum -y install php-fpm php
 eval sudo yum -y install "php-{$PHPEXT}"
 
 sudo mv $BASEDIR/configs/www.conf "/etc/php-fpm.d/www.conf"
-sudo sed -i 's/\/run\/php\/php7.4-fpm.sock/\/var\/run\/php7.4-fpm.sock/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/\/run\/php\/php8.1-fpm.sock/\/var\/run\/php8.1-fpm.sock/g' /etc/php-fpm.d/www.conf
 
 sudo systemctl enable "php-fpm"
 sudo systemctl restart "php-fpm"

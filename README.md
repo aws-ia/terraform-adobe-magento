@@ -1,167 +1,92 @@
-> Note: This module is in beta testing and likely contains bugs. It is not recommended for production use at this time.
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
-# Terraform Magento Commerce
-This module uses Terraform Cloud to deploy Magento Commerce on the Amazon Web Services (AWS) Cloud.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.66.0 |
+| <a name="requirement_awscc"></a> [awscc](#requirement\_awscc) | ~> 0.8.0 |
 
-**Authors**
+## Providers
 
-James Cowie, Pat McManaman, and Mikko Sivula, Shero Commerce
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.66.0 |
 
-Kenny Rajan, Dan Taoka, and Vikram Mehto, Amazon Web Services
+## Modules
 
-# Install Terraform
-See [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_account"></a> [account](#module\_account) | ./modules/account | n/a |
+| <a name="module_acm"></a> [acm](#module\_acm) | ./modules/acm | n/a |
+| <a name="module_base"></a> [base](#module\_base) | ./modules/base | n/a |
+| <a name="module_magento"></a> [magento](#module\_magento) | ./modules/magento | n/a |
+| <a name="module_magento_ami"></a> [magento\_ami](#module\_magento\_ami) | ./modules/magento_ami | n/a |
+| <a name="module_services"></a> [services](#module\_services) | ./modules/services | n/a |
+| <a name="module_ssm"></a> [ssm](#module\_ssm) | ./modules/ssm | n/a |
+| <a name="module_varnish_ami"></a> [varnish\_ami](#module\_varnish\_ami) | ./modules/varnish_ami | n/a |
 
-# Sign up for Terraform Cloud
-Log in to [Terraform Cloud](https://app.terraform.io/signup/account). If you don't have an account, you can sign up for a free tier.
+## Resources
 
-## Configure Terraform Cloud API access
+| Name | Type |
+|------|------|
+| [aws_ami.selected](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 
-Generate a Terraform Cloud token:
+## Inputs
 
-```
-terraform login
-```
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_base_ami_os"></a> [base\_ami\_os](#input\_base\_ami\_os) | OS for base AMI | `string` | n/a | yes |
+| <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Create VPC or not | `bool` | n/a | yes |
+| <a name="input_elasticsearch_domain"></a> [elasticsearch\_domain](#input\_elasticsearch\_domain) | ElasticSearch domain | `string` | n/a | yes |
+| <a name="input_mage_composer_password"></a> [mage\_composer\_password](#input\_mage\_composer\_password) | Magento auth.json password | `string` | n/a | yes |
+| <a name="input_mage_composer_username"></a> [mage\_composer\_username](#input\_mage\_composer\_username) | Magento auth.json username | `string` | n/a | yes |
+| <a name="input_magento_admin_email"></a> [magento\_admin\_email](#input\_magento\_admin\_email) | Email address for Magento admin. | `string` | n/a | yes |
+| <a name="input_magento_admin_firstname"></a> [magento\_admin\_firstname](#input\_magento\_admin\_firstname) | Firstname for Magento admin. | `string` | n/a | yes |
+| <a name="input_magento_admin_lastname"></a> [magento\_admin\_lastname](#input\_magento\_admin\_lastname) | Lastname for Magento admin. | `string` | n/a | yes |
+| <a name="input_magento_admin_password"></a> [magento\_admin\_password](#input\_magento\_admin\_password) | Password for Magento admin. | `string` | n/a | yes |
+| <a name="input_magento_admin_username"></a> [magento\_admin\_username](#input\_magento\_admin\_username) | Username for Magento admin. | `string` | n/a | yes |
+| <a name="input_magento_database_password"></a> [magento\_database\_password](#input\_magento\_database\_password) | Password for Magento DB. | `string` | n/a | yes |
+| <a name="input_management_addresses"></a> [management\_addresses](#input\_management\_addresses) | Whitelisted IP addresses for e.g. Security Groups | `list(string)` | n/a | yes |
+| <a name="input_profile"></a> [profile](#input\_profile) | AWS profile | `string` | n/a | yes |
+| <a name="input_project"></a> [project](#input\_project) | Name of the project. | `string` | n/a | yes |
+| <a name="input_rabbitmq_username"></a> [rabbitmq\_username](#input\_rabbitmq\_username) | Username for RabbitMQ | `string` | n/a | yes |
+| <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | SSH key name | `string` | n/a | yes |
+| <a name="input_ssh_key_pair_name"></a> [ssh\_key\_pair\_name](#input\_ssh\_key\_pair\_name) | SSH keypair name | `string` | n/a | yes |
+| <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | SSH username | `string` | n/a | yes |
+| <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | VPC CIDR | `string` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID | `string` | n/a | yes |
+| <a name="input_vpc_private2_subnet_id"></a> [vpc\_private2\_subnet\_id](#input\_vpc\_private2\_subnet\_id) | VPC private subnet 1 | `string` | n/a | yes |
+| <a name="input_vpc_private_subnet_id"></a> [vpc\_private\_subnet\_id](#input\_vpc\_private\_subnet\_id) | VPC private subnet 1 | `string` | n/a | yes |
+| <a name="input_vpc_public2_subnet_id"></a> [vpc\_public2\_subnet\_id](#input\_vpc\_public2\_subnet\_id) | VPC public subnet 1 | `string` | n/a | yes |
+| <a name="input_vpc_public_subnet_id"></a> [vpc\_public\_subnet\_id](#input\_vpc\_public\_subnet\_id) | VPC public subnet 1 | `string` | n/a | yes |
+| <a name="input_vpc_rds_subnet2_id"></a> [vpc\_rds\_subnet2\_id](#input\_vpc\_rds\_subnet2\_id) | RDS private subnet 2 | `string` | n/a | yes |
+| <a name="input_vpc_rds_subnet_id"></a> [vpc\_rds\_subnet\_id](#input\_vpc\_rds\_subnet\_id) | RDS private subnet 1 | `string` | n/a | yes |
+| <a name="input_az1"></a> [az1](#input\_az1) | AZ 1 | `string` | `"us-east-1a"` | no |
+| <a name="input_az2"></a> [az2](#input\_az2) | AZ 2 | `string` | `"us-east-1b"` | no |
+| <a name="input_cert"></a> [cert](#input\_cert) | TLS certificate | `string` | `false` | no |
+| <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Add domain name for the project. | `string` | `null` | no |
+| <a name="input_lb_access_logs_enabled"></a> [lb\_access\_logs\_enabled](#input\_lb\_access\_logs\_enabled) | Enable load balancer accesslogs to s3 bucket | `bool` | `false` | no |
+| <a name="input_magento_db_allocated_storage"></a> [magento\_db\_allocated\_storage](#input\_magento\_db\_allocated\_storage) | DB allocated storage space | `number` | `60` | no |
+| <a name="input_magento_db_backup_retention_period"></a> [magento\_db\_backup\_retention\_period](#input\_magento\_db\_backup\_retention\_period) | Backup retention period for DB | `number` | `3` | no |
+| <a name="input_magento_db_performance_insights_enabled"></a> [magento\_db\_performance\_insights\_enabled](#input\_magento\_db\_performance\_insights\_enabled) | DB performance insights | `bool` | `true` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | `"us-east-1"` | no |
+| <a name="input_skip_rds_snapshot_on_destroy"></a> [skip\_rds\_snapshot\_on\_destroy](#input\_skip\_rds\_snapshot\_on\_destroy) | Take a final snapshot on RDS destroy? | `bool` | `false` | no |
+| <a name="input_use_aurora"></a> [use\_aurora](#input\_use\_aurora) | Use Aurora or RDS | `bool` | `true` | no |
 
-Export the `TERRAFORM_CONFIG` variable:
+## Outputs
 
-```
-export TERRAFORM_CONFIG="$HOME/.terraform.d/credentials.tfrc.json"
-```
-
-# Configure the `tfvars` file
-
-Example path:
-
-```
-$HOME/.aws/terraform.tfvars
-```
-
-An example of the `tfvars` file contents:
-
-```
-AWS_SECRET_ACCESS_KEY = "{insert secret access key}"
-AWS_ACCESS_KEY_ID = "{insert access key ID}"
-AWS_SESSION_TOKEN = "{insert session token}"
-```
-
-> Note: We recommend using Security Token Service (AWS STS)–based credentials.
-
-> Warning: Follow best practices for managing secrets, and ensure that your credentials are not stored in a public repository.
-
-> Note: Before deployment, you must create both an AWS key pair and a Magento deployment key.
-
-# Create an AWS key pair
-To create a key pair, see [Prepare an AWS Account](https://docs.aws.amazon.com/quickstart/latest/magento/step1.html).
-
-> Note the key-pair name because you will use it during the deployment.
-
-## Store the private key in AWS Secrets Manager as plaintext
-
-1. Navigate to AWS Secrets Manager in the AWS Management Console.
-2. Store a new secret.
-3. Choose **Other type of secrets**.
-4. Choose **Plaintext"**.
-5. Clear the `\{:}` JSON format from the **Plaintext** section.
-6. Copy and paste the private-key contents that you previously created.
-7. Select the encryption key, and choose **Next**. 
-8. Set secret name to `ssh-key-admin`, and choose **Next**.
-9. Set **Automatic rotation** to **Disabled**, and choose **Next**.
-10. Review and store the key.
-
-# Create Magento deployment keys
-
-To create Magento deployment keys, see [Get your authentication keys](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html). This deployment uses [Composer](https://getcomposer.org/) to manage Magento components and their dependencies. For more information, see [Magento Composer](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/intro/intro-composer.html).
-
-* Create a Magento public-authentication key for your Composer user name.
-* Create a Magento public-authentication key for your Composer password.
-
-> Note these values because you will use them during the deployment.
-
-# Deploy the module (Linux and iOS)
-
-1. Clone the repository.
-2. Navigate to the repository's root directory.
-3. Navigate to the `setup_workspace` directory:
-
-```
-cd setup_workspace
-```
-
-Run the following commands in order:
-
-```
-terraform init
-```
-
-Alternatively, for the previous command, specify the file:
-
-```
-terraform apply -var-file="$HOME/.aws/terraform.tfvars"
-```
-
-You are asked for the following:
-* The AWS Region where you want to deploy this module. This must match the Region where you generated the key pair.
-* The organization under which Terraform Cloud runs. This can be found in the Terraform Cloud console.
-* Setup confirmation.
-
-Terraform Cloud creates the workspace, which contains the Terraform Cloud organization name.
-
-Navigate to the directory, and deploy Magento (the previous `terraform init` command generates `backend.hcl`):
-
-```
-cd ../deploy
-```
-
-1. Open, edit, and review all of the variables in the `variables.tf` file.
-2. Update the `default=` value for your deployment.
-3. The `description=` provides additional context for each variable.
-
-The following items must be edited before deployment:
-
-* Project-specific: `domain_name`
-* Magento information: `mage_composer_username`
-* Magento information: `mage_composer_password`
-* Magento information: `magento_admin_password`
-* Magento information: `magento_admin_email`
-* Database: `magento_database_password`
-
-> Important: Don't store secret information in a public repository.
-
-After you review and update the `./deploy/variables.tf` file, run one of the following Terraform commands:
-
-```
-terraform apply
-terraform apply -var-file="$HOME/.aws/terraform.tfvars"
-```
-
-Terraform apply runs remotely in Terraform Cloud and takes about 30–60 minutes to deploy.
-
-During the deployment, you should receive an AWS email to allow Amazon SES to send you emails. Verify this before you log in to Magento.
-
-After the Terraform deployment completes, an output shows the relevant information for accessing Magento.
-
-> Important: After Terraform completes, Magento bootstraps the environment, which takes about 15–20 minutes. Various Magento install and configuration commands run during this time, and the site enters maintenance mode. After it exits maintenance mode, images sync with your Amazon Simple Storage Service (Amazon S3) bucket.
-
-
-# Test the deployment
-After Terraform completes, it outputs the frontend and backend URLs. Use the credentials specified in the `variables.tf` file to log in as an administrator. Run the following command to connect to the web node:
-
-```
-ssh -i PATH_TO_GENERATED_KEY -J admin@BASTION_PUBLIC_IP magento@WEB_NODE_PRIVATE_IP
-```
-
-> Note: Ensure that you have SSH key forwarding enabled.
-
-# Clean up the infrastructure
-
-> Note: If you want to retain the Magento files stored in your Amazon S3 bucket, copy and save the bucket's objects before completing this step.
-
-When you no longer need the infrastructure, run one of the following commands to remove it:
-
-```
-terraform destroy
-terraform destroy -var-file="$HOME/.aws/terraform.tfvars
-```
-
-After you remove the infrastructure, the database is stored as an artifact.
+| Name | Description |
+|------|-------------|
+| <a name="output_alb_external_dns_name"></a> [alb\_external\_dns\_name](#output\_alb\_external\_dns\_name) | ALB DNS hostname |
+| <a name="output_magento_admin_email"></a> [magento\_admin\_email](#output\_magento\_admin\_email) | Magento admin email address |
+| <a name="output_magento_admin_password"></a> [magento\_admin\_password](#output\_magento\_admin\_password) | Magento admin password |
+| <a name="output_magento_admin_url"></a> [magento\_admin\_url](#output\_magento\_admin\_url) | Magento admin URL |
+| <a name="output_magento_cache_host"></a> [magento\_cache\_host](#output\_magento\_cache\_host) | Magento cache hostname |
+| <a name="output_magento_database_host"></a> [magento\_database\_host](#output\_magento\_database\_host) | Magento DB hostname |
+| <a name="output_magento_elasticsearch_host"></a> [magento\_elasticsearch\_host](#output\_magento\_elasticsearch\_host) | Magento ES hostname |
+| <a name="output_magento_files_s3"></a> [magento\_files\_s3](#output\_magento\_files\_s3) | Magento files S3 |
+| <a name="output_magento_frontend_url"></a> [magento\_frontend\_url](#output\_magento\_frontend\_url) | Magento frontend URL |
+| <a name="output_magento_rabbitmq_host"></a> [magento\_rabbitmq\_host](#output\_magento\_rabbitmq\_host) | Magento rabbitmq hostname |
+| <a name="output_magento_session_host"></a> [magento\_session\_host](#output\_magento\_session\_host) | Magento session hostname |
+<!-- END_TF_DOCS -->

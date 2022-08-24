@@ -28,6 +28,7 @@ variable "magento_admin_username" {
   type        = string
 }
 
+
 variable "magento_database_password" {
   description = "Password for Magento DB."
   type        = string

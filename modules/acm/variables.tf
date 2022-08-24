@@ -1,7 +1,9 @@
 variable "domain_name" {
-  type = string
+  type        = string
+  description = "Domain name"
 }
 
 variable "route53_zone_id" {
-  type = string
+  type        = string
+  description = "R53 zone ID"
 }

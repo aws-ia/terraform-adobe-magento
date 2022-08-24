@@ -4,6 +4,7 @@ resource "random_string" "mq_password" {
   upper   = true
 }
 
+#tfsec:ignore:aws-mq-enable-audit-logging
 resource "aws_mq_broker" "rabbit_mq" {
   broker_name = "rabbitmq"
 
@@ -25,6 +26,11 @@ resource "aws_mq_broker" "rabbit_mq" {
   user {
     username = var.rabbitmq_username
     password = random_string.mq_password.result
+  }
+
+  logs {
+    #    audit   = true 
+    general = true
   }
 
   tags = {
