@@ -320,13 +320,25 @@ resource "aws_autoscaling_group" "varnish" {
 ##
 
 # Magento cfg
-data "template_file" "magento_userdata" {
-  template = <<EOF
+locals{
+  magento_userdata = <<EOF
 #!/bin/bash
 sleep $[ ( $RANDOM % 10 )  + 1 ]s
 sudo -u admin crontab -r
 sudo su - magento -c "/opt/ec2_install/scripts/magento-setup.sh"
   EOF
+
+# Varnish cfg
+varnish_userdata=<<EOF
+#!/bin/bash
+sudo -u admin crontab -r
+sed -i "s/DNS_RESOLVER/${cidrhost(var.vpc_cidr, "2")}/g" /etc/nginx/conf.d/varnish.conf
+sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/nginx/conf.d/varnish.conf
+sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/varnish/backends.vcl
+systemctl start nginx
+systemctl restart varnish
+  EOF
+
 }
 
 resource "aws_launch_template" "magento_launch_template" {
@@ -357,7 +369,8 @@ resource "aws_launch_template" "magento_launch_template" {
     }
   }
 
-  user_data = "${base64encode(data.template_file.magento_userdata.rendered)}"
+
+  user_data = "${base64encode(local.magento_userdata)}"
 
   lifecycle {
     create_before_destroy = true
@@ -373,18 +386,7 @@ resource "aws_autoscaling_attachment" "asg_attachment_magento_alb" {
   alb_target_group_arn   = aws_alb_target_group.alb_tg_internal.arn
 }
 
-# Varnish cfg
-data "template_file" "varnish_userdata" {
-  template = <<EOF
-#!/bin/bash
-sudo -u admin crontab -r
-sed -i "s/DNS_RESOLVER/${cidrhost(var.vpc_cidr, "2")}/g" /etc/nginx/conf.d/varnish.conf
-sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/nginx/conf.d/varnish.conf
-sed -i "s/MAGENTO_INTERNAL_ALB/${aws_alb.alb_internal.dns_name}/g" /etc/varnish/backends.vcl
-systemctl start nginx
-systemctl restart varnish
-  EOF
-}
+
 
 resource "aws_launch_template" "varnish_launch_template" {
   name_prefix   = "varnish-"
@@ -411,7 +413,7 @@ resource "aws_launch_template" "varnish_launch_template" {
     }
   }
 
-  user_data = "${base64encode(data.template_file.varnish_userdata.rendered)}"
+  user_data = "${base64encode(local.varnish_userdata)}"
 
   lifecycle {
     create_before_destroy = true
