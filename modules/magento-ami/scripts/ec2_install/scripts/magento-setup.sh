@@ -48,6 +48,7 @@ sudo systemctl restart nginx
 if [ ! -d "/mnt/efs/magento" ]
 then
     sudo mkdir -p /mnt/efs/magento
+    sudo chown magento. /mnt/efs
     sudo chown magento. /mnt/efs/magento
     sudo -u magento mkdir -p /mnt/efs/magento/pub
     sudo -u magento mkdir -p /mnt/efs/magento/app/etc

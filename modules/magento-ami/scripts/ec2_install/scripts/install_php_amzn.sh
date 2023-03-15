@@ -1,8 +1,8 @@
 #!/bin/bash
 BASEDIR=$1
 
-PHPVER="74"
-PHPEXT="bcmath,bz2,curl,dba,enchant,fileinfo,gd,gmp,iconv,igbinary,imagick,imap,intl,json,mbstring,memcached,mysql,odbc,pgsql,pspell,redis,simplexml,soap,tidy,xsl,zip"
+PHPVER="81"
+PHPEXT="bcmath,bz2,curl,dba,enchant,fileinfo,gd,gmp,iconv,igbinary,imagick,imap,intl,mbstring,memcached,mysql,odbc,pgsql,pspell,redis,simplexml,soap,tidy,xsl,zip"
 
 sudo printf "[main]\nenabled = 0\n" | sudo tee /etc/yum/pluginconf.d/priorities.conf
 
@@ -16,7 +16,7 @@ sudo yum -y install php-fpm php
 eval sudo yum -y install "php-{$PHPEXT}"
 
 sudo mv $BASEDIR/configs/www.conf "/etc/php-fpm.d/www.conf"
-sudo sed -i 's/\/run\/php\/php7.4-fpm.sock/\/var\/run\/php7.4-fpm.sock/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/\/run\/php\/php8.1-fpm.sock/\/var\/run\/php8.1-fpm.sock/g' /etc/php-fpm.d/www.conf
 
 sudo systemctl enable "php-fpm"
 sudo systemctl restart "php-fpm"
