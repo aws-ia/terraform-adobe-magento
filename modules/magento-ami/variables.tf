@@ -14,6 +14,11 @@ variable "ssh_key_name" {
 variable "ssh_username" {
   type        = string
   description = "Admin SSH username"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._-]+$", var.ssh_username))
+    error_message = "ssh_username may only contain letters, digits, dots, underscores, and hyphens."
+  }
 }
 
 variable "ssh_key_pair_name" {
@@ -27,11 +32,22 @@ variable "ssh_key_pair_name" {
 variable "mage_composer_username" {
   type        = string
   description = "Magento auth.json username"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._@-]+$", var.mage_composer_username))
+    error_message = "mage_composer_username may only contain letters, digits, and the characters . _ @ -"
+  }
 }
 
 variable "mage_composer_password" {
   type        = string
   description = "Magento auth.json password"
+  sensitive   = true
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._@-]+$", var.mage_composer_password))
+    error_message = "mage_composer_password may only contain letters, digits, and the characters . _ @ -"
+  }
 }
 
 ###################################
