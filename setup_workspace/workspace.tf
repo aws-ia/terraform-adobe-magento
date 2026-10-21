@@ -25,7 +25,11 @@ module "tfcloud" {
 resource "null_resource" "setup_backend_file" {
   depends_on = [module.tfcloud]
   provisioner "local-exec" {
-    command = "mv backend.hcl ${local.dir_down}${var.working_directory}"
+    environment = {
+      DIR_DOWN          = local.dir_down
+      WORKING_DIRECTORY = var.working_directory
+    }
+    command = "mv backend.hcl \"$DIR_DOWN$WORKING_DIRECTORY\""
   }
 }
 

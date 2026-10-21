@@ -22,6 +22,11 @@ variable "tfe_email" {
 variable "working_directory" {
   type    = string
   default = "/deploy"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._/-]+$", var.working_directory))
+    error_message = "working_directory may only contain letters, digits, slashes, dots, underscores, and hyphens (no shell metacharacters)."
+  }
 }
 variable "region" {
   type = string
